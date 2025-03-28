@@ -406,4 +406,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 </style>
+<<<<<<< HEAD
 @endsection
+=======
+@endsection
+>>>>>>> 73aa7d46b21da869958b907c679599bfb3cef23a

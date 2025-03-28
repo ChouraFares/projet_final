@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+<<<<<<< HEAD
 use App\Models\CustomNotification;
+=======
+>>>>>>> 73aa7d46b21da869958b907c679599bfb3cef23a
 use App\Models\FactureComplimentaireThonModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +17,7 @@ class FactureComplimentaireThonSuperAdminTransit extends Controller
 
     public function index()
     {
+<<<<<<< HEAD
         $user = Auth::user();
         
         // Notifications non lues
@@ -32,6 +36,14 @@ class FactureComplimentaireThonSuperAdminTransit extends Controller
         
         return view('super_admin_transit.dashboard', compact('unreadNotifications', 'allNotifications'));
     }
+=======
+        // Récupérer les notifications non lues de l'utilisateur connecté
+        $unreadNotifications = Auth::user()->unreadNotifications;
+
+        // Passer les données à la vue
+        return view('super_admin_transit.dashboard', compact('unreadNotifications'));
+    } 
+>>>>>>> 73aa7d46b21da869958b907c679599bfb3cef23a
 
     public function showPendingRequests()
 {

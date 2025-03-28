@@ -62,4 +62,8 @@ class CustomNotification extends Model
     {
         return $this->data['date_demande'] ?? null;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 73aa7d46b21da869958b907c679599bfb3cef23a

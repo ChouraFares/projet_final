@@ -2,7 +2,115 @@
 
 @section('title', 'Sinistres - TM')
 
+<<<<<<< HEAD
 
+=======
+@section('styles')
+<style>
+    /* Conteneur principal */
+    .container-fluid {
+        padding: 20px;
+        width: 100%;
+        max-width: 100%; /* Supprime la limitation de largeur */
+    }
+
+    /* Style du tableau */
+    #sinistresTable {
+        width: 100% !important; /* Forcer le tableau à prendre toute la largeur */
+        margin-bottom: 20px;
+        border-collapse: collapse;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+    }
+
+    #sinistresTable th, #sinistresTable td {
+        padding: 12px 15px;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 14px;
+    }
+
+    #sinistresTable thead th {
+        background-color: #343a40; /* Gris foncé pour l'en-tête */
+        color: white;
+        font-weight: bold;
+    }
+
+    #sinistresTable tbody tr:nth-child(even) {
+        background-color: #f8f9fa; /* Gris clair pour les lignes paires */
+    }
+
+    #sinistresTable tbody tr:hover {
+        background-color: #e9ecef; /* Survol des lignes */
+        transition: background-color 0.3s;
+    }
+
+    /* Boutons */
+    .btn {
+        border-radius: 5px;
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+    }
+
+    .btn-warning:hover {
+        background-color: #e0a800;
+        border-color: #e0a800;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #c82333;
+    }
+
+    .btn-info {
+        background-color: #17a2b8;
+        border-color: #17a2b8;
+    }
+
+    .btn-info:hover {
+        background-color: #138496;
+        border-color: #138496;
+    }
+
+    /* Boutons d'exportation */
+    #exportButtons .btn {
+        margin-right: 10px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        #sinistresTable th, #sinistresTable td {
+            font-size: 12px;
+            padding: 8px;
+        }
+        .btn {
+            font-size: 12px;
+            padding: 6px 10px;
+        }
+    }
+</style>
+@endsection
+>>>>>>> 73aa7d46b21da869958b907c679599bfb3cef23a
 
 @section('content')
 <!-- DataTables CSS -->

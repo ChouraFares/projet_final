@@ -380,11 +380,14 @@ Route::middleware([TransitAgentAchat::class])->group(function () {
 Route::middleware([super_admin_transit::class])->group(function () {
     Route::get('/super-admin-transit/dashboard', [FactureComplimentaireThonSuperAdminTransit::class, 'index'])
     ->name('super-admin-transit.dashboard');
+<<<<<<< HEAD
     Route::post('/notifications/{notification}/mark-as-read', [NotificationController::class, 'markAsRead'])
     ->name('notifications.mark-as-read');
 Route::delete('/notifications/{notification}', [NotificationController::class, 'destroy'])
     ->name('notifications.destroy');
 
+=======
+>>>>>>> 73aa7d46b21da869958b907c679599bfb3cef23a
 
     Route::get('/super-admin-transit/Ressources Humaines', function () {
         return view('super_admin_transit.ressources_humaines');

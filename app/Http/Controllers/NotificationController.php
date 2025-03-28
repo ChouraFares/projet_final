@@ -105,4 +105,8 @@ public function SuperAdminTransitShowNotifications()
                     return view('super_admin_transit.notifications', compact('unreadNotifications'));
                 }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 73aa7d46b21da869958b907c679599bfb3cef23a

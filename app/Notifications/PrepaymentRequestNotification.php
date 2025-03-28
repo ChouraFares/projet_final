@@ -30,6 +30,7 @@ class PrepaymentRequestNotification extends Notification
 
     public function toArray($notifiable)
     {
+<<<<<<< HEAD
         $cheque = $this->facture->cheques->first();
     
         return [
@@ -41,6 +42,17 @@ class PrepaymentRequestNotification extends Notification
             'transit_agent_name' => $this->transitAgentName,
             'cheque_montant' => $cheque ? $cheque->montant : null,
             'cheque_ref_mdp' => $cheque ? $cheque->ref_mdp : null,
+=======
+        $cheque = $this->facture->cheques->first(); // Récupérer le premier chèque associé
+
+        return [
+            'facture_number' => $this->facture->facture,
+            'fournisseur' => $this->fournisseur,
+            'date_demande' => $this->dateDemande,
+            'transit_agent_name' => $this->transitAgentName,
+            'cheque_montant' => $cheque ? $cheque->montant : 'N/A',
+            'cheque_ref_mdp' => $cheque ? $cheque->ref_mdp : 'N/A',
+>>>>>>> 73aa7d46b21da869958b907c679599bfb3cef23a
         ];
     }
     public function toMail($notifiable)
@@ -60,12 +72,20 @@ class PrepaymentRequestNotification extends Notification
     public function toDatabase($notifiable)
     {
         return [
+<<<<<<< HEAD
             'facture_id' => $this->facture->id,
             'facture_number' => $this->facture->facture,
             'fournisseur' => $this->fournisseur,
             'date_demande' => $this->dateDemande->format('Y-m-d H:i:s'),
             'transit_agent' => $this->transitAgentName,
             'transit_agent_name' => $this->transitAgentName,
+=======
+            'facture_number' => $this->facture->facture,
+            'fournisseur' => $this->fournisseur,
+            'date_demande' => $this->dateDemande,
+            'facture_id' => $this->facture->id,
+            'transit_agent' => $this->transitAgentName,
+>>>>>>> 73aa7d46b21da869958b907c679599bfb3cef23a
         ];
     }
 }
