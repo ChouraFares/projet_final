@@ -241,114 +241,123 @@ public function update(Request $request, $id)
 }
 
 public function demander_prepayement(Request $request, $id)
-{
-    Log::info('Début de demander_prepayement pour facture ID: ' . $id);
+    {
+        Log::info('Début de demander_prepayement pour facture ID: ' . $id);
 
-    $request->validate([
-        'facture' => 'required|string|max:255',
-        'fournisseur' => 'required|string|max:255',
-        'armateur' => 'nullable|string|max:255',
-        'incoterm' => 'nullable|string|max:50',
-        'port' => 'nullable|string|max:255',
-        'bank' => 'nullable|string|max:255',
-        'date_declaration' => 'nullable|date',
-        'assureur' => 'nullable|string|max:255',
-        'date_expiration' => 'nullable|date',
-        'total' => 'nullable|numeric',
-        'date_recuperation' => 'nullable|date',
-        'date_enlevement' => 'nullable|date',
-        'payment_types' => 'required|array',
-        'payment_types.*' => 'in:recette_finance,douane,timbrage_et_avances_surestarie,stam,assurance',
-        'cheque_count' => 'array',
-        'cheque_count.*' => 'required|integer|min:1',
-        'cheques' => 'array',
-        'cheques.*.*.montant' => 'nullable|numeric',
-        'cheques.*.*.ref_mdp' => 'nullable|string|max:255',
-    ]);
+        // Validation des données
+        $request->validate([
+            'facture' => 'required|string|max:255',
+            'fournisseur' => 'required|string|max:255',
+            'armateur' => 'nullable|string|max:255',
+            'incoterm' => 'nullable|string|max:50',
+            'port' => 'nullable|string|max:255',
+            'bank' => 'nullable|string|max:255',
+            'date_declaration' => 'nullable|date',
+            'assureur' => 'nullable|string|max:255',
+            'date_expiration' => 'nullable|date',
+            'total' => 'nullable|numeric',
+            'date_recuperation' => 'nullable|date',
+            'date_enlevement' => 'nullable|date',
+            'payment_types' => 'required|array',
+            'payment_types.*' => 'in:recette_finance,douane,timbrage_et_avances_surestarie,stam,assurance',
+            'cheque_count' => 'array',
+            'cheque_count.*' => 'required|integer|min:1',
+            'cheques' => 'array',
+            'cheques.*.*.montant' => 'nullable|numeric',
+            'cheques.*.*.ref_mdp' => 'nullable|string|max:255',
+        ]);
 
-    Log::info('Validation réussie');
+        Log::info('Validation réussie');
 
-    DB::beginTransaction();
-    try {
-        $facture = FactureComplimentaireThonModel::findOrFail($id);
-        Log::info('Facture trouvée: ' . $facture->id);
+        DB::beginTransaction();
+        try {
+            // Récupérer la facture
+            $facture = FactureComplimentaireThonModel::findOrFail($id);
+            Log::info('Facture trouvée: ' . $facture->id);
 
-        if ($facture->hasExistingRequest()) {
-            Log::info('Demande existante détectée');
-            return redirect()->back()->with('error', 'Une demande de prépaiement existe déjà pour cette facture.');
-        }
+            // Vérifier si une demande existe déjà
+            if ($facture->hasExistingRequest()) {
+                Log::info('Demande existante détectée');
+                return redirect()->back()->with('error', 'Une demande de prépaiement existe déjà pour cette facture.');
+            }
 
-        $factureData = $request->except(['statut_finance', 'validation_finance', 'payment_types', 'cheque_count', 'cheques', 'date_demande']);
-        $factureData['date_demande'] = now();
-        $facture->update($factureData);
-        Log::info('Facture mise à jour avec date_demande');
+            // Mettre à jour la facture avec les données du formulaire
+            $factureData = $request->except(['statut_finance', 'validation_finance', 'payment_types', 'cheque_count', 'cheques', 'date_demande']);
+            $factureData['date_demande'] = now();
+            $facture->update($factureData);
+            Log::info('Facture mise à jour avec date_demande');
 
-        $paymentTypes = $request->input('payment_types', []);
-        foreach ($paymentTypes as $paymentType) {
-            $facture->update(["{$paymentType}_preparer_paiement" => true]);
-            Log::info("Type de paiement mis à jour: {$paymentType}");
+            // Gérer les types de paiement et les chèques
+            $paymentTypes = $request->input('payment_types', []);
+            foreach ($paymentTypes as $paymentType) {
+                $facture->update(["{$paymentType}_preparer_paiement" => true]);
+                Log::info("Type de paiement mis à jour: {$paymentType}");
 
-            ChequePaiement::where('facture_id', $facture->id)
-                ->where('payment_type', $paymentType)
-                ->delete();
+                ChequePaiement::where('facture_id', $facture->id)
+                    ->where('payment_type', $paymentType)
+                    ->delete();
 
-            $cheques = $request->input("cheques.{$paymentType}", []);
-            foreach ($cheques as $cheque) {
-                if (!empty($cheque['montant']) || !empty($cheque['ref_mdp'])) {
-                    ChequePaiement::create([
-                        'facture_id' => $facture->id,
-                        'payment_type' => $paymentType,
-                        'montant' => $cheque['montant'],
-                        'ref_mdp' => $cheque['ref_mdp'],
-                    ]);
-                    Log::info("Chèque créé pour {$paymentType}");
+                $cheques = $request->input("cheques.{$paymentType}", []);
+                foreach ($cheques as $cheque) {
+                    if (!empty($cheque['montant']) || !empty($cheque['ref_mdp'])) {
+                        ChequePaiement::create([
+                            'facture_id' => $facture->id,
+                            'payment_type' => $paymentType,
+                            'montant' => $cheque['montant'],
+                            'ref_mdp' => $cheque['ref_mdp'],
+                        ]);
+                        Log::info("Chèque créé pour {$paymentType}");
+                    }
                 }
             }
+
+            // Mettre à jour la validation finance si nécessaire
+            if ($facture->validation_transit === 'Validé') {
+                $facture->validation_finance = 'Clôturé';
+                $facture->save();
+                Log::info('Validation finance mise à Clôturé');
+            }
+
+            // Récupérer le nom de l'agent de transit (TransitAgent)
+            $transitAgentName = Auth::user()->name;
+            Log::info('Agent transit: ' . $transitAgentName);
+
+            // Envoyer les notifications aux responsables finance
+            $responsablesFinance = User::where('role', 'responsable_finance')->get();
+            foreach ($responsablesFinance as $responsable) {
+                $responsable->notify(new PrepaymentRequestNotification(
+                    $facture,
+                    $facture->fournisseur,
+                    $facture->date_demande,
+                    $transitAgentName
+                ));
+                Log::info('Notification envoyée à responsable_finance: ' . $responsable->id);
+            }
+
+            // Envoyer les notifications aux super admins transit
+            $superAdminsTransit = User::where('role', 'super_admin_transit')->get();
+            foreach ($superAdminsTransit as $superAdmin) {
+                $superAdmin->notify(new PrepaymentRequestNotification(
+                    $facture,
+                    $facture->fournisseur,
+                    $facture->date_demande,
+                    $transitAgentName
+                ));
+                Log::info('Notification envoyée à super_admin_transit: ' . $superAdmin->id);
+            }
+
+            DB::commit();
+            Log::info('Transaction validée');
+
+            return redirect()->route('transit-achat.facture-complimentaire-thon')
+                ->with('success', 'Demande de prépaiement envoyée avec succès !');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Erreur lors de la demande de prépaiement : ' . $e->getMessage() . ' | Stack: ' . $e->getTraceAsString());
+            return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
         }
-
-        if ($facture->validation_transit === 'Validé') {
-            $facture->validation_finance = 'Clôturé';
-            $facture->save();
-            Log::info('Validation finance mise à Clôturé');
-        }
-
-        $transitAgentName = Auth::user()->name;
-        Log::info('Agent transit: ' . $transitAgentName);
-
-        $responsablesFinance = User::where('role', 'responsable_finance')->get();
-        foreach ($responsablesFinance as $responsable) {
-            $responsable->notify(new \App\Notifications\PrepaymentRequestNotification(
-                $facture,
-                $facture->fournisseur,
-                $facture->date_demande,
-                $transitAgentName
-            ));
-            Log::info('Notification envoyée à responsable_finance: ' . $responsable->id);
-        }
-
-        $superAdminsTransit = User::where('role', 'super_admin_transit')->get();
-        foreach ($superAdminsTransit as $superAdmin) {
-            $superAdmin->notify(new \App\Notifications\PrepaymentRequestNotification(
-                $facture,
-                $facture->fournisseur,
-                $facture->date_demande,
-                $transitAgentName
-            ));
-            Log::info('Notification envoyée à super_admin_transit: ' . $superAdmin->id);
-        }
-
-        DB::commit();
-        Log::info('Transaction validée');
-
-        return redirect()->route('transit-achat.facture-complimentaire-thon')
-            ->with('success', 'Demande de prépaiement envoyée avec succès !');
-
-    } catch (\Exception $e) {
-        DB::rollBack();
-        Log::error('Erreur lors de la demande de prépaiement : ' . $e->getMessage() . ' | Stack: ' . $e->getTraceAsString());
-        return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
     }
-}
 
 public function destroy($id)
 {
