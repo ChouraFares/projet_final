@@ -12,7 +12,6 @@
 <!-- Font Awesome CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-<<<<<<< HEAD
 <style>
     /* Style pour la colonne Actions */
     .actions-column {
@@ -29,8 +28,6 @@
     }
 </style>
 
-=======
->>>>>>> 73aa7d46b21da869958b907c679599bfb3cef23a
 <!-- Conteneur principal -->
 <div class="container-fluid">
     <h2 class="text-center mb-4">Liste des Contrats Flotte</h2>
@@ -92,11 +89,7 @@
                     @endif
                 </td>
                 <td class="actions-column">
-<<<<<<< HEAD
                     <a href="{{ route('admin.assurance.flotte.edit', $contrat->id) }}" class="btn btn-warning btn-sm">
-=======
-                    <a href="{{ route('admin.assurance.flotte.edit', $contrat->id) }}" class="btn btn-warning btn-sm mb-2">
->>>>>>> 73aa7d46b21da869958b907c679599bfb3cef23a
                         <i class="fas fa-edit"></i> Modifier
                     </a>
                     <form action="{{ route('admin.assurance.flotte.destroy', $contrat->id) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce contrat ?');">

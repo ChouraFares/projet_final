@@ -3,24 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-<<<<<<< HEAD
+
 use App\Imports\FacturesImport; // "App" avec une majuscule
 use App\Models\ChequePaiement;
 use App\Models\FactureComplimentaireThonModel;
 
 use App\Models\User;
-=======
-use App\Models\ChequePaiement;
-use App\Models\FactureComplimentaireThonModel;
 use App\Models\Notification;
-use App\Models\User;
 use App\Notifications\PrepaymentRequestNotification;
->>>>>>> 73aa7d46b21da869958b907c679599bfb3cef23a
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-<<<<<<< HEAD
+
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -69,11 +64,8 @@ class FactureComplimentaireThon extends Controller
         // Cas par défaut (ex. texte non valide)
         return null;
     }
-=======
 
-class FactureComplimentaireThon extends Controller
-{
->>>>>>> 73aa7d46b21da869958b907c679599bfb3cef23a
+
 
     public function showDetailleChequeAssurance($id)
     {

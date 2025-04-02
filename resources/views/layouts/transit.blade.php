@@ -3,32 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
     <title>Transit Achat  - BK FOOD</title>
-=======
-    <title>Transit - BK FOOD</title>
->>>>>>> 73aa7d46b21da869958b907c679599bfb3cef23a
     <link rel="stylesheet" href="{{ asset('css/transit.css') }}">
     <link href="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css">
     <style>
-<<<<<<< HEAD
         /* Fixer le zoom à 75% avec transform */
         body {
             transform: scale(0.75); /* Zoom augmenté de 50% à 75% */
             transform-origin: top left; /* Point de départ du zoom */
             width: 133.33%; /* Compensé pour le zoom (100 / 0.75 = 133.33%) */
             height: 133.33%; /* Compensé pour le zoom (100 / 0.75 = 133.33%) */
-=======
-        /* Fixer le zoom à 50% avec transform */
-        body {
-            transform: scale(0.5);
-            transform-origin: top left; /* Point de départ du zoom */
-            width: 200%; /* Compensé pour éviter le rétrécissement */
-            height: 200%; /* Compensé pour éviter le rétrécissement */
->>>>>>> 73aa7d46b21da869958b907c679599bfb3cef23a
             overflow: auto; /* Permettre le défilement si nécessaire */
         }
 
@@ -44,11 +31,7 @@
             position: fixed;
             top: 20px;
             left: 50%;
-<<<<<<< HEAD
             transform: translateX(-50%) scale(1.3333); /* Contrebalancer le zoom du body (1 / 0.75 = 1.3333) */
-=======
-            transform: translateX(-50%) scale(2); /* Contrebalancer le zoom du body */
->>>>>>> 73aa7d46b21da869958b907c679599bfb3cef23a
             width: 80%;
             max-width: 600px;
             z-index: 1000;
@@ -118,8 +101,4 @@
 
     @yield('scripts')
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> 73aa7d46b21da869958b907c679599bfb3cef23a

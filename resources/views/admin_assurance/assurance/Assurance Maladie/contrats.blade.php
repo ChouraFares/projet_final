@@ -8,7 +8,7 @@
     .container-fluid {
         padding: 20px;
         width: 100%;
-        height: 100vh; /* Hauteur totale de la fenêtre */
+        height: 100vh;
         margin: 0;
         display: flex;
         flex-direction: column;
@@ -16,19 +16,17 @@
 
     /* Style du tableau */
     #contractsTable {
-        width: 100% !important; /* Toute la largeur */
-        height: 100%; /* Toute la hauteur disponible */
+        width: 100%;
         margin-bottom: 20px;
         border-collapse: collapse;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         background-color: #fff;
     }
 
-    /* Conteneur du tableau avec flex pour occuper l'espace restant */
     .table-wrapper {
-        flex: 1; /* Prend tout l'espace restant */
-        overflow-y: auto; /* Défilement vertical si nécessaire */
-        overflow-x: auto; /* Défilement horizontal si nécessaire */
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: auto;
     }
 
     #contractsTable th, #contractsTable td {
@@ -39,20 +37,20 @@
     }
 
     #contractsTable thead th {
-        background-color: #343a40; /* Gris foncé pour l'en-tête */
+        background-color: #343a40;
         color: white;
         font-weight: bold;
-        position: sticky; /* Fixe l'en-tête en haut */
+        position: sticky;
         top: 0;
         z-index: 1;
     }
 
     #contractsTable tbody tr:nth-child(even) {
-        background-color: #f8f9fa; /* Gris clair pour les lignes paires */
+        background-color: #f8f9fa;
     }
 
     #contractsTable tbody tr:hover {
-        background-color: #e9ecef; /* Survol des lignes */
+        background-color: #e9ecef;
         transition: background-color 0.3s;
     }
 
@@ -64,7 +62,7 @@
     }
 
     .btn i {
-        margin-right: 5px; /* Conservé de votre style existant */
+        margin-right: 5px;
     }
 
     .btn-primary {
@@ -114,18 +112,14 @@
 
     /* Colonne Actions */
     .actions-column {
-        width: 100px !important;
-        min-width: 100px;
+        min-width: 120px;
         white-space: nowrap;
         text-align: center;
-        display: flex;
-        flex-direction: column; /* Conservé de votre style existant */
-        gap: 5px; /* Conservé de votre style existant */
-        align-items: center;
     }
 
     .actions-column .btn {
-        margin: 0; /* Ajusté pour éviter un espacement excessif */
+        margin: 5px 0;
+        width: 100px; /* Largeur fixe pour alignement */
     }
 
     /* Responsive */
@@ -138,9 +132,11 @@
             font-size: 12px;
             padding: 6px 10px;
         }
+        .actions-column .btn {
+            width: 80px;
+        }
     }
 
-    /* Ajustement pour le layout parent si nécessaire */
     html, body {
         height: 100%;
         margin: 0;
@@ -187,7 +183,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($contrats as $contrat)
+                @forelse($contrats as $contrat)
                     <tr>
                         <td>{{ $contrat->compagnie_assurance }}</td>
                         <td>{{ $contrat->ref_contrat }}</td>
@@ -198,9 +194,9 @@
                         <td>{{ $contrat->objet_avenant }}</td>
                         <td>
                             @if($contrat->attachement_contrat)
-                            <a href="{{ asset('storage/' . $contrat->attachement_contrat) }}" target="_blank" class="btn btn-info btn-sm">
-                                <i class="fas fa-file-alt"></i> Voir
-                            </a>
+                                <a href="{{ asset('storage/' . $contrat->attachement_contrat) }}" target="_blank" class="btn btn-info btn-sm">
+                                    <i class="fas fa-file-alt"></i> Voir
+                                </a>
                             @else
                                 Aucun fichier
                             @endif
@@ -209,7 +205,7 @@
                             <a href="{{ route('contrats_assurance_maladie.edit', $contrat->id) }}" class="btn btn-warning btn-sm">
                                 <i class="fas fa-edit"></i> Modifier
                             </a>
-                            <form action="{{ route('contrats_assurance_maladie.destroy', $contrat->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('contrats_assurance_maladie.destroy', $contrat->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Voulez-vous vraiment supprimer ce contrat ?')">
@@ -218,7 +214,11 @@
                             </form>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="9">Aucun contrat disponible</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
@@ -236,18 +236,18 @@
 <script>
 $(document).ready(function() {
     var table = $('#contractsTable').DataTable({
-        scrollX: true,  // Active le défilement horizontal si nécessaire
+        scrollX: true,
         autoWidth: false,
         dom: 'Bfrtip',
-        pageLength: 10, // Nombre d'éléments affichés par page
-        lengthMenu: [10, 25, 50, 100], // Options de pagination
+        pageLength: 10,
+        lengthMenu: [10, 25, 50, 100],
         buttons: [
             {
                 extend: 'excelHtml5',
                 text: '<i class="fas fa-file-excel"></i> Exporter Excel',
                 className: 'btn btn-primary',
                 exportOptions: {
-                    columns: ':not(:nth-child(8), :last-child)' // Exclure la colonne Attachement Contrat et Actions
+                    columns: ':not(:nth-child(8), :last-child)' // Exclure Attachement et Actions
                 }
             },
             {
@@ -255,10 +255,10 @@ $(document).ready(function() {
                 text: '<i class="fas fa-file-pdf"></i> Exporter PDF',
                 className: 'btn btn-danger',
                 exportOptions: {
-                    columns: ':not(:nth-child(8), :last-child)' // Exclure la colonne Attachement Contrat et Actions
+                    columns: ':not(:nth-child(8), :last-child)' // Exclure Attachement et Actions
                 },
                 customize: function(doc) {
-                    doc.content[1].table.widths = Array(doc.content[1].table.body[0].length).fill('*'); // Largeur égale pour toutes les colonnes
+                    doc.content[1].table.widths = Array(doc.content[1].table.body[0].length).fill('*');
                     doc.styles.tableHeader.fontSize = 10;
                     doc.styles.tableBodyEven.fontSize = 10;
                     doc.styles.tableBodyOdd.fontSize = 10;
