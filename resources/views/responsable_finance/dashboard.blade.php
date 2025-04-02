@@ -4,8 +4,7 @@
 @include('components.navbar')
 
 <style>
-    /* Styles pour la modal de notifications */
-    /* Style pour les toasts */
+ 
 .toast {
     position: fixed;
     bottom: 20px;

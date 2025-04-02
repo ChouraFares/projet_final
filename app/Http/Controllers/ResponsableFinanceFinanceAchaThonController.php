@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Mail\PrepaymentApprovedMail;
 use App\Models\CustomNotification;
 use App\Models\FactureComplimentaireThonModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class ResponsableFinanceFinanceAchaThonController extends Controller
 {
@@ -63,6 +65,11 @@ class ResponsableFinanceFinanceAchaThonController extends Controller
     
         if ($request->action === 'approve') {
             $facture->update(['validation_finance' => 'Validé']);
+            
+            $transitAgent = $facture->transitAgent;
+            if ($transitAgent && $transitAgent->email) {
+                Mail::to($transitAgent->email)->send(new PrepaymentApprovedMail($facture));
+            }
         } elseif ($request->action === 'reject') {
             $facture->update(['validation_finance' => 'Refusé']);
         }

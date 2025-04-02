@@ -1,123 +1,218 @@
 @extends('layouts.app')
-
 @section('title', 'Tableau de Bord Utilisateur')
-
-@section('content')
-
-<div class="dashboard">
-    <div class="header">
-        <div class="logo-container">
-            <img src="{{ asset('images/bk-food.png') }}" alt="Logo BK FOOD" class="logo">
-        </div>
-        <div class="user-info">
-            <h2>Bonjour, {{ Auth::user()->name }}!</h2>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: inline;">
-                @csrf
-                <button type="submit" class="btn btn-logout">Se Déconnecter</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="options">
-        <a href="{{ route('user.loan') }}" class="option">
-            <i class="fas fa-hand-holding-usd"></i> Demander un Prêt/Avance
-        </a>
-        <a href="{{ route('user.view_loan_requests') }}" class="option">
-            <i class="fas fa-hand-holding-usd"></i> Etat De La Demande Du Prêt/Avance
-        </a>
-        <a href="{{ route('user.Local-Mission') }}" class="option">
-            <i class="fas fa-home"></i> Mission Locale
-        </a>
-        <a href="{{ route('international-mission.create') }}" class="option">
-            <i class="fas fa-globe"></i> Mission Internationale
-        </a>
-        <a href="{{ route('user.viewMissionsLocal') }}" class="option">
-            <i class="fas fa-chalkboard-teacher"></i> Etat De La Demande Mission Locale
-        </a>
-        <a href="{{ route("user.viewMissionsInternational") }}" class="option">
-            <i class="fas fa-globe"></i> Etat De La Demande Mission International
-        </a>
-        <a href="{{ route('user.createInternshipRequest') }}" class="option">
-            <i class="fas fa-file-alt"></i> Déposer une Demande De Stage
-        </a>
-        <a href="{{ route('user.internshipRequests') }}" class="option">
-            <i class="fas fa-file-alt"></i> Etat Des Demandes De Stages
-        </a>
-  
-    </div>
-</div>
+@include('components.navbar')
 
 <style>
+    :root {
+        --olive: #887630;
+        --federal-blue: #00004F;
+        --navy-blue: #000080;
+        --gold: #F4A261;
+        --dark-blue: #2A4B67;
+    }
+
     .dashboard {
         padding: 20px;
+        background-color: var(--light-gray);
+        min-height: 100vh;
     }
 
     .header {
-        text-align: center;
-        margin-bottom: 30px;
+        background-color: var(--dark-blue);
+        color: white;
         padding: 20px;
         border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
-    .logo-container {
-        margin-bottom: 15px;
-    }
-
-    .logo {
-        width: 150px;
-    }
-
-    .user-info h2 {
-        font-size: 24px;
-        margin-bottom: 10px;
-    }
-
-    .btn-logout {
-        background-color: #dc3545;
-        border: none;
-        padding: 10px 15px;
-        font-size: 14px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .btn-logout:hover {
-        background-color: #c82333;
+    .logo-container h2 {
+        color: var(--gold);
+        margin: 0;
+        font-size: 1.8rem;
     }
 
     .options {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 20px;
-        margin-top: 30px;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
     }
 
     .option {
-        padding: 20px;
+        background-color: white;
         border-radius: 10px;
+        padding: 25px;
         text-align: center;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
         text-decoration: none;
-        color: #333;
+        color: var(--federal-blue);
+        transition: all 0.3s ease;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-left: 4px solid var(--gold);
     }
 
     .option:hover {
-        transform: translateY(-10px);
+        transform: translateY(-5px);
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        border-left-color: var(--olive);
     }
 
     .option i {
-        font-size: 40px;
-        margin-bottom: 10px;
+        font-size: 2.5rem;
+        color: var(--gold);
+        margin-bottom: 15px;
+        display: block;
     }
 
     .option h3 {
-        font-size: 16px;
-        font-weight: 600;
-        margin-top: 10px;
+        font-size: 1.2rem;
+        margin: 10px 0;
+        color: var(--navy-blue);
     }
+
+    .btn-logout {
+        background-color: transparent;
+        border: 2px solid var(--gold);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 500;
+    }
+
+    .btn-logout:hover {
+        background-color: var(--gold);
+        color: var(--federal-blue);
+    }
+
+    /* Styles pour les animations */
+    .animate__animated {
+        animation-duration: 0.5s;
+    }
+
+    @media (max-width: 768px) {
+        .header {
+            flex-direction: column;
+            text-align: center;
+            gap: 15px;
+        }
+        
+        .options {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Styles des notifications (conservés de votre exemple) */
+    .notification-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    .notification-modal-content {
+        background-color: var(--dark-blue);
+        margin: 5% auto;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        width: 80%;
+        max-width: 800px;
+        color: white;
+        position: relative;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* ... (conservez le reste de vos styles de notification existants) ... */
 </style>
 
-@endsection
+<div class="dashboard">
+    <div class="header animate__animated animate__fadeInDown">
+        <div class="logo-container">
+            <h2>Bonjour, {{ Auth::user()->name }} !</h2>
+        </div>
+  
+    </div>
+
+    <div class="options animate__animated animate__fadeInUp animate__delay-1s">
+        <a href="{{ route('user.loan') }}" class="option">
+            <i class="fas fa-hand-holding-usd"></i>
+            <h3>Demander un Prêt/Avance</h3>
+            <p>Formulaire de demande</p>
+        </a>
+        
+        <a href="{{ route('user.view_loan_requests') }}" class="option">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <h3>État des Demandes</h3>
+            <p>Suivi des prêts/avances</p>
+        </a>
+        
+        <a href="{{ route('user.Local-Mission') }}" class="option">
+            <i class="fas fa-home"></i>
+            <h3>Mission Locale</h3>
+            <p>Nouvelle demande</p>
+        </a>
+        
+        <a href="{{ route('international-mission.create') }}" class="option">
+            <i class="fas fa-globe"></i>
+            <h3>Mission Internationale</h3>
+            <p>Nouvelle demande</p>
+        </a>
+        
+        <a href="{{ route('user.viewMissionsLocal') }}" class="option">
+            <i class="fas fa-clipboard-list"></i>
+            <h3>Suivi Missions Locales</h3>
+            <p>État des demandes</p>
+        </a>
+        
+        <a href="{{ route('user.viewMissionsInternational') }}" class="option">
+            <i class="fas fa-globe-americas"></i>
+            <h3>Suivi Missions Internationales</h3>
+            <p>État des demandes</p>
+        </a>
+        
+        <a href="{{ route('user.createInternshipRequest') }}" class="option">
+            <i class="fas fa-file-alt"></i>
+            <h3>Demande de Stage</h3>
+            <p>Nouvelle demande</p>
+        </a>
+        
+        <a href="{{ route('user.internshipRequests') }}" class="option">
+            <i class="fas fa-tasks"></i>
+            <h3>Suivi Demandes de Stage</h3>
+            <p>État des demandes</p>
+        </a>
+    </div>
+</div>
+
+<!-- Modal Notifications (identique à votre exemple) -->
+<div class="notification-modal" id="notificationModal">
+    <!-- ... (conservez votre modal de notification existant) ... -->
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // ... (conservez votre script de notification existant) ...
+    
+    // Animation au survol des options
+    document.querySelectorAll('.option').forEach(option => {
+        option.addEventListener('mouseenter', function() {
+            this.querySelector('i').style.transform = 'scale(1.1)';
+            this.querySelector('i').style.color = 'var(--olive)';
+        });
+        
+        option.addEventListener('mouseleave', function() {
+            this.querySelector('i').style.transform = 'scale(1)';
+            this.querySelector('i').style.color = 'var(--gold)';
+        });
+    });
+});
+</script>

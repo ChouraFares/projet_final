@@ -12,7 +12,6 @@
                 <h2>Bonjour, {{ Auth::user()->name }} !</h2>
             </div>
 
-            <!-- Bouton Notifications -->
      
         </div>
 
