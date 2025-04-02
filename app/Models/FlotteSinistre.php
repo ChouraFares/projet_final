@@ -22,4 +22,5 @@ class FlotteSinistre extends Model
         'reglement',
         'Expert',
     ];
+ 
 }

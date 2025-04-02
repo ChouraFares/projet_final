@@ -35,8 +35,7 @@
         <!-- Fautif -->
         <div class="form-group">
             <label for="fautif">Fautif</label>
-            <select name="fautif" class="form-control form-control-lg" style="width: 100%;">
-                <option value="">-- Sélectionnez une option --</option>
+            <select name="fautif" class="form-control form-control-lg" required style="width: 100%;">
                 <option value="Oui">Oui</option>
                 <option value="Non">Non</option>
             </select>

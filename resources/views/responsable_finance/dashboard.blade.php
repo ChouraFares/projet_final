@@ -359,7 +359,7 @@
             </a>
             <a href="{{ route('responsable_finance.suivi-factures-achats') }}" class="option">
                 <i class="fas fa-coins"></i>
-                <h3>Achat Importer</h3>
+                <h3>Achats en importation</h3>
             </a>
             @if(Auth::user()->role === 'responsable_finance')
                 <a href="{{ route('admin_assurance.types') }}" class="option">

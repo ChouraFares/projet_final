@@ -264,7 +264,8 @@
                 <td>{{ $sinistre->immatriculation }}</td>
                 <td>{{ $sinistre->vehicule }}</td>
                 <td>{{ $sinistre->chauffeur }}</td>
-                <td>{{ $sinistre->fautif ? 'Oui' : 'Non' }}</td>
+                <td>{{ $sinistre->getAttribute('fautif') ?? 'Non défini' }}</td> 
+                
                 <td>{{ $sinistre->date_sinistre }}</td>
                 <td>{{ $sinistre->nature_sinistre }}</td>
                 <td>

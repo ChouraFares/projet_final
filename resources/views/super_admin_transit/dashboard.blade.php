@@ -355,7 +355,7 @@
         </a>
         <a href="{{ route('super-admin-transit.suivi-factures-achats') }}" class="option">
             <i class="fas fa-coins"></i>
-            <h3>Achat Importer</h3>
+            <h3>Achats en importation</h3>
         </a>
     </div>
 

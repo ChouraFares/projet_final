@@ -23,7 +23,7 @@
             </a>
             <a href="{{ route('transit-achat.suivi-factures') }}" class="option">
                 <i class="fas fa-file-invoice-dollar"></i>
-                <h3>Achats importés</h3>
+                <h3>Achats en importation</h3>
             </a>
         </div>
     </div>

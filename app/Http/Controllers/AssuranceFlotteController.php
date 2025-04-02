@@ -126,7 +126,7 @@ class AssuranceFlotteController extends Controller
             'immatriculation' => 'nullable',
             'vehicule' => 'nullable',
             'chauffeur' => 'nullable',
-            'fautif' => 'nullable',
+            'fautif' => 'nullable|in:Oui,Non', // Ajout de la règle "in" pour limiter les valeurs
             'date_sinistre' => 'nullable|date',
             'nature_sinistre' => 'nullable',
             'situation_dossier' => 'nullable',
@@ -163,7 +163,7 @@ class AssuranceFlotteController extends Controller
             'immatriculation' => 'nullable',
             'vehicule' => 'nullable',
             'chauffeur' => 'nullable',
-            'fautif' => 'nullable',
+            'fautif' => 'nullable|in:Oui,Non', // Assurer que la valeur est "Oui" ou "Non"
             'date_sinistre' => 'nullable|date',
             'nature_sinistre' => 'nullable',
             'situation_dossier' => 'nullable',

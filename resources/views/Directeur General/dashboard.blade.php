@@ -18,7 +18,7 @@
     <div class="options">
         <a href="{{route('responsable_finance.suivi-factures-achats')}}" class="option">
             <i class="fas fa-file-invoice-dollar"></i> 
-            <h3>Gestion des Achats</h3>
+            <h3>Achats en importation</h3>
         </a>
         <a href="{{route('DirecteurGeneral-insurance_types')}}" class="option">
             <i class="fas fa-shield-alt"></i> 
