@@ -1,0 +1,394 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #1E3D58, #2A4B67);
+    color: #fff;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.option {
+    background-color: #F4A261;
+    color: #1E3D58;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+option i {
+    margin-right: 10px;
+    font-size: 1.5rem;
+}
+
+.option:hover {
+    background-color: #E76F51;
+    transform: scale(1.08);
+}
+
+/* Responsive Design */
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    color: #ffcc00;
+    text-align: center;
+    text-shadow: 1px 1px 2px #000;
+
+    margin-bottom: 20px;
+}
+
+.dt-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    max-width: 100%;
+    border: 1px solid #1f2102;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    min-width: 1500px; /* Ajustement pour éviter l'étirement excessif */
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+table thead th {
+    background-color: #00020470;
+    color: #fff;
+    padding: 14px;
+    font-size: 1rem;
+    text-align: center;
+    border-bottom: 2px solid #fff;
+}
+
+table tbody td {
+    padding: 10px;
+    font-size: 0.9rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+table tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: 0.3s;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    max-width: 100%;
+    }
+
+
+
+/* Styles pour la barre de défilement */
+.table-responsive::-webkit-scrollbar {
+    height: 5px;
+}
+
+.dataTables_wrapper {
+    overflow-x: auto;
+    width: 100%;
+}
+.table-responsive::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: #eee;
+}
+
+/* Boutons */
+.btn {
+    background-color: #987b04;
+    border: none;
+    color: white;
+    padding: 12px 18px;
+    font-size: 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Icônes */
+.fas {
+    margin-right: 5px;
+}
+
+.dataTables_filter input {
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid #ccc !important;
+    padding: 8px;
+    border-radius: 5px;
+}
+.dataTables_filter input::placeholder {
+    color: #777 !important;
+}
+
+.row {
+    display: flex;
+    /* Aligner les cartes horizontalement */
+    flex-direction: row;
+    /* Distribuer l'espace entre les cartes */
+    justify-content: space-between;
+    /* Permettre aux cartes de passer à la ligne si nécessaire */
+    flex-wrap: wrap;
+}
+.card {
+    width: 32%; /* Adjust as needed for desired card width */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px; /* Space between cards */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+
+}
+
+.card h4 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #987b04; /* Example color */
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: bold;
+    display: block; /* Make labels stack on top of inputs */
+    margin-bottom: 5px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+.btn-primary {
+    background-color: #987b04;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%; /* Make button full width */
+    margin-top: 20px;
+}
+
+.btn-primary:hover {
+    background-color: #987b04;
+}
+
+
+/* Responsive adjustments (example) */
+@media (max-width: 1200px) {
+    .card {
+        width: 48%; /* Two cards per row */
+    }
+}
+
+.payment-group {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0; /* Ligne de séparation entre les groupes */
+}
+
+.payment-group:last-child {
+    border-bottom: none; /* Pas de bordure pour le dernier groupe */
+}
+
+.form-check {
+    margin-bottom: 10px;
+}
+
+.form-check-input {
+    margin-right: 10px;
+}
+
+.form-check-label {
+    font-weight: bold;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* === Statuts de validation généraux === */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* Espacement entre l'icône et le texte */
+.badge i {
+    margin-right: 5px;
+}
+
+/* === Styles des badges === */
+
+/* En attente */
+.badge-en-attente {
+    background-color: #ffc107 !important; /* Jaune */
+    color: black !important;
+}
+
+/* Validé */
+.badge-valide {
+    background-color: #28a745 !important; /* Vert */
+    color: white !important;
+}
+
+/* Validé par DG */
+.badge-dg {
+    background-color: #007bff !important; /* Bleu pour différencier la validation DG */
+    color: white !important;
+}
+
+/* Refusé */
+.badge-refuse {
+    background-color: #dc3545 !important; /* Rouge */
+    color: white !important;
+}
+.badge-refuse-dg {
+    background-color: #a71d2a !important; /* Rouge foncé pour distinguer */
+    color: white !important;
+}
+/* Non clôturé */
+.badge-non-cloture {
+    background-color: #ffc107 !important; /* Jaune */
+    color: black !important;
+}
+
+/* Clôturé */
+.badge-cloture {
+    background-color: #28a745 !important; /* Vert */
+    color: white !important;
+}
+
+/* Danger (Refusé alternative) */
+.badge-danger {
+    background-color: #dc3545 !important; /* Rouge */
+    color: white !important;
+}
+
+
+
+/* style des tableaux */
+
+#facturesTable th, #facturesTable td {
+    padding: 12px;
+    text-align: center;
+    border: 0.5px solid #727070ba;
+    vertical-align: middle;
+}
+
+#facturesTable th {
+    font-weight: 100;
+}
+
+/* Classes pour les groupes de factures */
+
+
+
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+/* Style pour l'icône de dossier */
+.fas.fa-folder {
+    margin-right: 5px;
+    font-size: 1.1em;
+}
+
+.btn-warning:hover {
+    background-color: #e68900 !important;
+    border-color: #e68900 !important;
+     }
+
+
+    .btn-info {
+        background-color: #17a2b8;
+        border-color: #17a2b8;
+        color: white;
+        padding: 5px 10px;
+        font-size: 14px;
+    }
+
+    .btn-info:hover {
+        background-color: #138496;
+        border-color: #117a8b;
+    }
+
+    /* Style pour la colonne de date (optionnel, conservé) */
+    table#facturesTable td:nth-child(1) {
+        font-weight: bold;
+        color: #1E3D58;
+        background-color: #f8f9fa;
+    }
+
+    /* Styles pour les groupes de factures - Appliquer uniquement aux colonnes jusqu'à BL */
+    td.group-1 { background-color: #f67206 !important; }
+    td.group-2 { background-color: #fc0909 !important; }
+    td.group-3 { background-color: #7a9b03 !important; }
+    td.group-4 { background-color: #7b0ee8 !important; }
+    td.group-5 { background-color: #00c0fb !important; }
+    td.group-6 { background-color: #2105f9 !important; }
+    td.group-7 { background-color: #e542ca !important; }
+    td.group-8 { background-color: #f2f843 !important; }
+    td.group-9 { background-color: #8c4949 !important; }
+    td.group-10 { background-color: #333350 !important; }
+
+
