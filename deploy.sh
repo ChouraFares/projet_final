@@ -1,8 +1,14 @@
 #!/bin/bash
 echo "Déploiement en cours..."
+# Vérifier si la branche master existe, sinon la créer
+if ! git rev-parse --verify master >/dev/null 2>&1; then
+    echo "ℹ️ Création de la branche master..."
+    git checkout -b master || { echo "❌ Erreur : Impossible de créer master"; exit 1; }
+fi
 
 # S'assurer d'être sur la branche master localement
 git checkout master || { echo "❌ Erreur : Impossible de passer sur master"; exit 1; }
+
 
 # Vérifier s'il y a des conflits non résolus dans Git
 if git status | grep -q "unmerged paths"; then
