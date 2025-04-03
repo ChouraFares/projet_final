@@ -32,9 +32,9 @@ return [
     |
     */
 
-    'lifetime' => env('SESSION_LIFETIME', 120),
+'lifetime' => env('SESSION_LIFETIME', 120), // en minutes (2 heures par défaut)
 
-    'expire_on_close' => env('SESSION_EXPIRE_ON_CLOSE', false),
+'expire_on_close' => false, // Doit être false pour que "remember me" fonctionne
 
     /*
     |--------------------------------------------------------------------------

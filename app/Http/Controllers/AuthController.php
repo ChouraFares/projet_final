@@ -20,7 +20,7 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials,$request->remember)) {
             $user = Auth::user();
 
             // Vérifier si l'utilisateur appartient à "Achats import"
