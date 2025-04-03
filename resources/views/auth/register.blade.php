@@ -5,8 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - BK FOOD</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="icon" type="image/png" href="{{ asset('images/favicon-32x32.png') }}">
+<!-- Favicon HD (pour les écrans retina) -->
+<link rel="icon" type="image/png" sizes="512x512" href="{{ asset('images/bk-food-hd.png') }}">
 
+<!-- Favicon standard -->
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/bk-food-32x32.png') }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/bk-food-16x16.png') }}">
+
+<!-- Pour Safari/iOS -->
+<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/bk-food-180x180.png') }}">
 </head>
 <body>
     <div class="auth-container">
