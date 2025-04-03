@@ -220,7 +220,7 @@
             
             <div class="error-details">
                 <p><i class="fas fa-barcode"></i> <strong>Référence :</strong> ERR-{{ substr(md5(uniqid()), 0, 8) }}</p>
-                <p><i class="fas fa-calendar-day"></i> <strong>Date/heure (+1h) :</strong> {{ now()->addHour()->format('d/m/Y H:i:s') }}</p>
+                <p><i class="fas fa-calendar-day"></i> <strong>Date/heure :</strong> {{ now()->format('d/m/Y H:i:s') }}</p>
             </div>
             
             <div class="contact-card">
