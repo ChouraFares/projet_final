@@ -1,6 +1,20 @@
 #!/bin/bash
 echo "Déploiement en cours..."
-# Vérifier si la branche master existe, sinon la créer
+
+# Configuration Git
+git config --global core.autocrlf input
+
+# Vérifier la structure du dépôt
+if [ -d "projet_final/.git" ]; then
+    echo "❌ Erreur : Dépôt Git imbriqué détecté dans 'projet_final'"
+    echo "Solution : Exécutez les commandes suivantes puis relancez le script :"
+    echo "  git rm --cached projet_final -r"
+    echo "  mv projet_final/* ."
+    echo "  rm -rf projet_final"
+    exit 1
+fi
+
+# Vérifier la branche
 if ! git rev-parse --verify master >/dev/null 2>&1; then
     echo "ℹ️ Création de la branche master..."
     git checkout -b master || { echo "❌ Erreur : Impossible de créer master"; exit 1; }
@@ -8,7 +22,6 @@ fi
 
 # S'assurer d'être sur la branche master localement
 git checkout master || { echo "❌ Erreur : Impossible de passer sur master"; exit 1; }
-
 
 # Vérifier s'il y a des conflits non résolus dans Git
 if git status | grep -q "unmerged paths"; then
