@@ -141,7 +141,6 @@
 
     .file-upload-content:hover {
         border-color: #F4A261; /* Nouvelle couleur au hover, cohérente avec le design */
-        background-color: #2A4B67;
 
     }
 
