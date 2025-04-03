@@ -36,6 +36,15 @@
                         <span class="small">Mot de passe</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="nav-link btn-logout d-flex align-items-center">
+                            <i class="fas fa-sign-out-alt fa-lg me-2"></i>
+                            <span>Déconnexion</span>
+                        </button>
+                    </form>
+                </li>
 
                 <!-- User Profile Dropdown -->
                 <li class="nav-item dropdown">
@@ -55,7 +64,7 @@
                         <li><a class="dropdown-item" href="{{ route('change-password') }}">Paramètres</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                            <form id="logout-form-dropdown" action="{{ route('logout') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="dropdown-item btn-logout">Déconnexion</button>
                             </form>
@@ -126,7 +135,7 @@
 }
 
 .profile-photo {
-    width: 80px; /* Taille augmentée pour le dashboard */
+    width: 80px;
     height: 80px;
     border-radius: 50%;
     object-fit: cover;
@@ -152,7 +161,7 @@
 }
 
 .user-icon {
-    font-size: 50px; /* Taille augmentée pour correspondre à la photo */
+    font-size: 50px;
     color: #887630;
 }
 
@@ -182,10 +191,18 @@
 .btn-logout {
     background: none;
     border: none;
-    width: 100%;
-    text-align: left;
     color: white;
-    font-size: 1rem;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1.1rem; /* Taille augmentée */
+    padding: 12px 25px; /* Padding augmenté pour plus de largeur */
+    transition: all 0.3s;
+    width: 100%; /* S'étend sur toute la largeur disponible */
+    text-align: center;
+}
+
+.btn-logout i {
+    font-size: 20px; /* Icône plus grande */
 }
 
 .btn-logout:hover {
@@ -204,7 +221,7 @@
     }
     
     .profile-photo, .user-icon-container {
-        width: 60px; /* Réduction pour mobile */
+        width: 60px;
         height: 60px;
     }
     
@@ -219,9 +236,13 @@
     .navbar-title {
         font-size: 1.2rem;
     }
+    
+    .btn-logout {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
 }
 </style>
-
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
