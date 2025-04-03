@@ -16,6 +16,7 @@ use App\Http\Controllers\InternshipRequestController;
 use App\Http\Controllers\MaritimeController;
 use App\Http\Controllers\MrdController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResponsableCivilContratController;
 use App\Http\Controllers\ResponsableCivilSinistreController;
 use App\Http\Controllers\ResponsableFinanceAffectationDesStam;
@@ -37,9 +38,19 @@ use Illuminate\Support\Facades\Route;
 
 
 
+
 Route::get('/', function () {
     return view('home');
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    
+    // Route existante pour le mot de passe (séparée)
+});
+
 
 Route::get('/test-erreur', function () {
     abort(500); // Provoque une erreur 500

@@ -12,6 +12,8 @@ class CreateUsersTable extends Migration
             $table->id(); // unsignedBigInteger for 'id'
             $table->string('MLE', 255);
             $table->foreign('MLE')->references('MLE')->on('employes')->onDelete('cascade');
+            $table->string('profile_photo')->nullable();
+            $table->json('settings')->nullable();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
