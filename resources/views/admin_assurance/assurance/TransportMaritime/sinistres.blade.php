@@ -9,11 +9,14 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-     body {
-    transform: scale(0.6);
-    transform-origin: 0 0; /* pour ancrer le zoom en haut à gauche */
-    width: 200%; /* ajuster la largeur pour éviter les scrolls horizontaux */
-  }
+    body {
+        transform: scale(0.6);
+        transform-origin: 0 0;
+        /* pour ancrer le zoom en haut à gauche */
+        width: 200%;
+        /* ajuster la largeur pour éviter les scrolls horizontaux */
+    }
+
     :root {
         --primary-color: #f39c12;
         --secondary-color: #060401;
@@ -42,7 +45,7 @@
         font-size: 2rem;
         font-weight: 700;
         margin-bottom: 2rem;
-        color: #f39c12 ;
+        color: #f39c12;
         border-bottom: 2px solid #eee;
         padding-bottom: 1rem;
     }
@@ -191,24 +194,44 @@
     }
 
     /* Icônes spécifiques */
-    .fa-hourglass-half { color: var(--en-attente-color); }
-    .fa-check-circle { color: var(--termine-color); }
-    .fa-times-circle { color: var(--rejete-color); }
-    .fa-box-open { color: var(--perte-color); }
-    .fa-tools { color: var(--avarie-color); }
-    .fa-clock { color: var(--retard-color); }
-    .fa-biohazard { color: var(--contamination-color); }
+    .fa-hourglass-half {
+        color: var(--en-attente-color);
+    }
+
+    .fa-check-circle {
+        color: var(--termine-color);
+    }
+
+    .fa-times-circle {
+        color: var(--rejete-color);
+    }
+
+    .fa-box-open {
+        color: var(--perte-color);
+    }
+
+    .fa-tools {
+        color: var(--avarie-color);
+    }
+
+    .fa-clock {
+        color: var(--retard-color);
+    }
+
+    .fa-biohazard {
+        color: var(--contamination-color);
+    }
 
     /* Responsive */
     @media (max-width: 992px) {
         .container-fluid {
             padding: 1rem;
         }
-        
+
         #sinistresTable thead {
             display: none;
         }
-        
+
         #sinistresTable tbody td {
             display: block;
             text-align: right;
@@ -216,7 +239,7 @@
             position: relative;
             border-bottom: 1px solid #eee;
         }
-        
+
         #sinistresTable tbody td:before {
             content: attr(data-label);
             position: absolute;
@@ -227,10 +250,21 @@
             font-weight: bold;
             color: var(--secondary-color);
         }
-        
+
         .actions-column {
             justify-content: flex-end;
         }
+    }
+
+    /* Style personnalisé pour le sélecteur lengthMenu */
+    .dataTables_wrapper .dataTables_length {
+        margin-bottom: 1rem;
+    }
+
+    .dataTables_wrapper .dataTables_length select {
+        border-radius: var(--border-radius);
+        border: 1px solid #ced4da;
+        padding: 0.3rem;
     }
 </style>
 
@@ -288,68 +322,60 @@
                 <td data-label="Date Remb.">{{ $sinistre->date_prev_remboursement }}</td>
                 <td data-label="Nature">
                     @switch($sinistre->nature_de_sinistre)
-                        @case('Perte totale')
-                            <span class="badge nature-perte">
-                                <i class="fas fa-box-open me-1"></i> Perte
-                            </span>
-                            @break
-                        @case('Avarie')
-                            <span class="badge nature-avarie">
-                                <i class="fas fa-tools me-1"></i> Avarie
-                            </span>
-                            @break
-                        @case('Retard')
-                            <span class="badge nature-retard">
-                                <i class="fas fa-clock me-1"></i> Retard
-                            </span>
-                            @break
-                        @case('Contamination')
-                            <span class="badge nature-contamination">
-                                <i class="fas fa-biohazard me-1"></i> Contamination
-                            </span>
-                            @break
-                        @default
-                            <span class="badge">{{ $sinistre->nature_de_sinistre }}</span>
+                    @case('Perte totale')
+                    <span class="badge nature-perte">
+                        <i class="fas fa-box-open me-1"></i> Perte
+                    </span>
+                    @break
+                    @case('Avarie')
+                    <span class="badge nature-avarie">
+                        <i class="fas fa-tools me-1"></i> Avarie
+                    </span>
+                    @break
+                    @case('Retard')
+                    <span class="badge nature-retard">
+                        <i class="fas fa-clock me-1"></i> Retard
+                    </span>
+                    @break
+                    @case('Contamination')
+                    <span class="badge nature-contamination">
+                        <i class="fas fa-biohazard me-1"></i> Contamination
+                    </span>
+                    @break
+                    @default
+                    <span class="badge">{{ $sinistre->nature_de_sinistre }}</span>
                     @endswitch
                 </td>
                 <td data-label="Statut">
                     @switch($sinistre->statut_du_dossier)
-                        @case('En attente')
-                            <span class="badge status-en-attente">
-                                <i class="fas fa-hourglass-half me-1"></i> En attente
-                            </span>
-                            @break
-                        @case('Terminé')
-                            <span class="badge status-termine">
-                                <i class="fas fa-check-circle me-1"></i> Terminé
-                            </span>
-                            @break
-                        @case('Rejeté')
-                            <span class="badge status-rejete">
-                                <i class="fas fa-times-circle me-1"></i> Rejeté
-                            </span>
-                            @break
-                        @default
-                            <span class="badge">{{ $sinistre->statut_du_dossier }}</span>
+                    @case('En attente')
+                    <span class="badge status-en-attente">
+                        <i class="fas fa-hourglass-half me-1"></i> En attente
+                    </span>
+                    @break
+                    @case('Terminé')
+                    <span class="badge status-termine">
+                        <i class="fas fa-check-circle me-1"></i> Terminé
+                    </span>
+                    @break
+                    @case('Rejeté')
+                    <span class="badge status-rejete">
+                        <i class="fas fa-times-circle me-1"></i> Rejeté
+                    </span>
+                    @break
+                    @default
+                    <span class="badge">{{ $sinistre->statut_du_dossier }}</span>
                     @endswitch
                 </td>
                 <td data-label="Commentaire">{{ Str::limit($sinistre->commentaire, 20) }}</td>
                 <td data-label="Actions" class="actions-column">
-                    <a href="{{ route('edit_maritime_sinistres', $sinistre->id) }}" 
-                       class="btn btn-warning btn-sm" 
-                       data-bs-toggle="tooltip" 
-                       title="Modifier">
+                    <a href="{{ route('edit_maritime_sinistres', $sinistre->id) }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Modifier">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <form action="{{ route('destroy_maritime_sinistres', $sinistre->id) }}" 
-                          method="POST" 
-                          onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce sinistre ?');">
+                    <form action="{{ route('destroy_maritime_sinistres', $sinistre->id) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce sinistre ?');">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" 
-                                class="btn btn-danger btn-sm" 
-                                data-bs-toggle="tooltip" 
-                                title="Supprimer">
+                        <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Supprimer">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </form>
@@ -379,7 +405,7 @@
                 <th></th> {{-- Colonne Actions, pas de filtre --}}
             </tr>
         </tfoot>
-        
+
     </table>
 </div>
 <!-- jQuery et DataTables JS -->
@@ -390,36 +416,49 @@
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
 
 <script>
-    $(document).ready(function () {
-        // Ajout d’un input dans chaque cellule du footer sauf pour la dernière (actions)
-        $('#sinistresTable tfoot th').each(function (i) {
-            if (i < 17) { // éviter la colonne "Actions"
-                $(this).html('<input type="text" placeholder="Rechercher..." style="width: 100%;"/>');
+    $(document).ready(function() {
+        // Ajout d’un champ de recherche dans chaque cellule du pied de table
+        $('#sinistresTable tfoot th').each(function(i) {
+            if (i < 17) { // On ne met pas de filtre sur la colonne "Actions"
+                $(this).html('<input type="text" placeholder="Rechercher..." style="width: 100%;" />');
             } else {
                 $(this).html('');
             }
         });
 
-        // Initialisation de la DataTable
+        // Initialisation de DataTable avec options
         var table = $('#sinistresTable').DataTable({
-            dom: 'Bfrtip',
+            dom: 'lBfrtip', // 'l' pour lengthMenu (le sélecteur du nombre d'enregistrements par page)
             buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-            initComplete: function () {
-                this.api().columns().every(function () {
+            lengthMenu: [
+                [10, 15, 20, 30, -1],
+                [10, 15, 20, 30, 'Tous']
+            ],
+            pageLength: 10, // Nombre d'enregistrements par défaut à l'affichage
+            initComplete: function() {
+                this.api().columns().every(function() {
                     var column = this;
-                    $('input', this.footer()).on('keyup change clear', function () {
+                    $('input', this.footer()).on('keyup change clear', function() {
                         if (column.search() !== this.value) {
                             column.search(this.value).draw();
                         }
                     });
                 });
+
+                // Placement des boutons d'exportation dans le conteneur dédié
+                $('#exportButtons').append(table.buttons().container());
             },
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/fr-FR.json'
             }
         });
+
+        // Mise en forme du sélecteur lengthMenu
+        $('.dataTables_length').addClass('d-flex align-items-center');
+        $('.dataTables_length label').addClass('me-2');
+        $('.dataTables_length select').css('margin-left', '0.5rem'); // Ajustez l'espacement selon vos besoins
     });
 </script>
 
-
 @endsection
+
