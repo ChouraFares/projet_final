@@ -54,7 +54,7 @@
         white-space: nowrap;
     }
 
-    /* Styles pour les différents avancements */
+    /* Styles pour les avancements */
     .status-avant-constat {
         background-color: #E2F0FD;
         color: #0A58CA;
@@ -79,6 +79,7 @@
         border: 1px solid #F5C2C7;
     }
 
+    /* Styles pour Statut */
     .status-en-cours {
         background-color: #FFF3CD;
         color: #856404;
@@ -91,11 +92,41 @@
         border: 1px solid #C3E6CB;
     }
 
+    /* Styles pour Nature du Sinistre */
+    .status-connexe {
+        background-color: #D1ECF1;
+        color: #0C5460;
+        border: 1px solid #BEE5EB;
+    }
+
+    .status-recours {
+        background-color: #F8D7DA;
+        color: #842029;
+        border: 1px solid #F5C2C7;
+    }
+
+    .status-incendie {
+        background-color: #FFD8D8;
+        color: #721C24;
+        border: 1px solid #FDA4AF;
+    }
+
+    .status-dommage-collision {
+        background-color: #FFE8CC;
+        color: #8A5522;
+        border: 1px solid #FFD8A8;
+    }
+
+    .status-bris-de-glace {
+        background-color: #E9ECEF;
+        color: #495057;
+        border: 1px solid #CED4DA;
+    }
+
     /* Tableau */
     #sinistresTable {
         width: 100% !important;
-        border-collapse: separate;
-        border-spacing: 0;
+        border-collapse: collapse;
         margin-top: 1rem;
     }
 
@@ -106,7 +137,8 @@
         position: sticky;
         top: 0;
         padding: 1rem;
-        border: none;
+        border-bottom: 2px solid #ddd;
+        text-align: left;
     }
 
     #sinistresTable tbody td {
@@ -120,15 +152,11 @@
     }
 
     /* Footer avec filtres alignés */
-    #sinistresTable tfoot {
-        background-color: #f8f9fa;
-    }
-
     #sinistresTable tfoot th {
         padding: 0.5rem 1rem;
-        vertical-align: middle;
         border-top: 2px solid #dee2e6;
-        border-bottom: 1px solid #dee2e6;
+        background-color: #f8f9fa;
+        text-align: left;
     }
 
     #sinistresTable tfoot input {
@@ -191,13 +219,10 @@
     }
 
     /* Cellule d'actions */
-    .actions-cell {
-        white-space: nowrap;
-    }
-
     .actions-cell .action-btns {
         display: flex;
         gap: 0.5rem;
+        justify-content: center;
     }
 
     /* Fichiers PDF */
@@ -207,7 +232,6 @@
         display: inline-flex;
         align-items: center;
         gap: 0.3rem;
-        transition: var(--transition);
     }
 
     .pdf-link:hover {
@@ -231,45 +255,11 @@
     .fa-file-signature { color: #0F5132; }
     .fa-user-tie { color: #664D03; }
     .fa-coins { color: #842029; }
-
-    /* Export buttons */
-    .dt-buttons .btn {
-        margin-right: 0.5rem;
-    }
-
-    /* Responsive */
-    @media (max-width: 992px) {
-        .container {
-            padding: 1rem;
-        }
-        
-        #sinistresTable thead {
-            display: none;
-        }
-        
-        #sinistresTable tbody td {
-            display: block;
-            text-align: right;
-            padding-left: 50%;
-            position: relative;
-            border-bottom: 1px solid #eee;
-        }
-        
-        #sinistresTable tbody td:before {
-            content: attr(data-label);
-            position: absolute;
-            left: 1rem;
-            width: calc(50% - 1rem);
-            padding-right: 1rem;
-            text-align: left;
-            font-weight: bold;
-            color: var(--secondary-color);
-        }
-        
-        .actions-cell .action-btns {
-            justify-content: flex-end;
-        }
-    }
+    .fa-link { color: #0C5460; } /* Connexe */
+    .fa-gavel { color: #842029; } /* Recours */
+    .fa-fire { color: #721C24; } /* Incendie */
+    .fa-car-crash { color: #8A5522; } /* Dommage Collision */
+    .fa-shield-alt { color: #495057; } /* Bris de Glace */
 </style>
 
 <!-- Conteneur principal -->
@@ -282,11 +272,10 @@
         <a href="{{ route('admin.assurance.flotte.sinistres.create') }}" class="btn btn-primary">
             <i class="fas fa-plus-circle me-1"></i> Nouveau Sinistre
         </a>
-        
         <div id="exportButtons" class="d-flex gap-2"></div>
     </div>
 
-    <table id="sinistresTable" class="table table-striped table-bordered nowrap">
+    <table id="sinistresTable" class="table table-striped table-bordered">
         <thead>
             <tr>
                 <th>Numéro</th>
@@ -310,15 +299,45 @@
         <tbody>
             @foreach($sinistres as $sinistre)
             <tr>
-                <td data-label="Numéro">{{ $sinistre->sinistre_num }}</td>
-                <td data-label="Compagnie">{{ $sinistre->compagnie_assurance }}</td>
-                <td data-label="Immatriculation">{{ $sinistre->immatriculation }}</td>
-                <td data-label="Véhicule">{{ $sinistre->vehicule }}</td>
-                <td data-label="Chauffeur">{{ $sinistre->chauffeur }}</td>
-                <td data-label="Fautif">{{ $sinistre->fautif ?? 'N/A' }}</td>
-                <td data-label="Date Sinistre">{{ $sinistre->date_sinistre->format('d/m/Y') }}</td>
-                <td data-label="Nature">{{ $sinistre->nature_sinistre }}</td>
-                <td data-label="Avancements">
+                <td>{{ $sinistre->sinistre_num }}</td>
+                <td>{{ $sinistre->compagnie_assurance }}</td>
+                <td>{{ $sinistre->immatriculation }}</td>
+                <td>{{ $sinistre->vehicule }}</td>
+                <td>{{ $sinistre->chauffeur }}</td>
+                <td>{{ $sinistre->fautif ?? 'N/A' }}</td>
+                <td>{{ $sinistre->date_sinistre->format('d/m/Y') }}</td>
+                <td>
+                    @switch($sinistre->nature_sinistre)
+                        @case('Connexe')
+                            <span class="status-badge status-connexe">
+                                <i class="fas fa-link me-1"></i> Connexe
+                            </span>
+                            @break
+                        @case('Recours')
+                            <span class="status-badge status-recours">
+                                <i class="fas fa-gavel me-1"></i> Recours
+                            </span>
+                            @break
+                        @case('Incendie')
+                            <span class="status-badge status-incendie">
+                                <i class="fas fa-fire me-1"></i> Incendie
+                            </span>
+                            @break
+                        @case('Dommage Collision')
+                            <span class="status-badge status-dommage-collision">
+                                <i class="fas fa-car-crash me-1"></i> Dommage Collision
+                            </span>
+                            @break
+                        @case('Bris de Glace')
+                            <span class="status-badge status-bris-de-glace">
+                                <i class="fas fa-shield-alt me-1"></i> Bris de Glace
+                            </span>
+                            @break
+                        @default
+                            <span class="status-badge">{{ $sinistre->nature_sinistre }}</span>
+                    @endswitch
+                </td>
+                <td>
                     @switch($sinistre->avancements)
                         @case('Avant Constat')
                             <span class="status-badge status-avant-constat">
@@ -344,7 +363,7 @@
                             <span class="status-badge">{{ $sinistre->avancements }}</span>
                     @endswitch
                 </td>
-                <td data-label="Statut">
+                <td>
                     @if($sinistre->statut == 'En Cours')
                         <span class="status-badge status-en-cours">
                             <i class="fas fa-hourglass-half me-1"></i> En Cours
@@ -355,12 +374,10 @@
                         </span>
                     @endif
                 </td>
-                <td data-label="Clôture">
-                    {{ $sinistre->date_cloture_dossier ? $sinistre->date_cloture_dossier->format('d/m/Y') : '-' }}
-                </td>
-                <td data-label="Règlement">{{ $sinistre->reglement ?? 'N/A' }}</td>
-                <td data-label="Expert">{{ $sinistre->Expert ?? 'N/A' }}</td>
-                <td data-label="Documents">
+                <td>{{ $sinistre->date_cloture_dossier ? $sinistre->date_cloture_dossier->format('d/m/Y') : '-' }}</td>
+                <td>{{ $sinistre->reglement ?? 'N/A' }}</td>
+                <td>{{ $sinistre->Expert ?? 'N/A' }}</td>
+                <td>
                     @if($sinistre->attachments_pdf)
                         <a href="{{ Storage::url($sinistre->attachments_pdf) }}" class="pdf-link" target="_blank">
                             <i class="fas fa-file-pdf me-1"></i> PDF
@@ -369,10 +386,10 @@
                         <span class="text-muted">Aucun</span>
                     @endif
                 </td>
-                <td data-label="Commentaire" class="comment-cell" title="{{ $sinistre->commentaire ?? '' }}">
+                <td class="comment-cell" title="{{ $sinistre->commentaire ?? '' }}">
                     {{ $sinistre->commentaire ? Str::limit($sinistre->commentaire, 30) : 'Aucun' }}
                 </td>
-                <td data-label="Actions" class="actions-cell">
+                <td class="actions-cell">
                     <div class="action-btns">
                         <a href="{{ route('admin.assurance.flotte.sinistres.edit', $sinistre->id) }}" 
                            class="btn btn-warning btn-sm" 
@@ -434,7 +451,7 @@
 $(document).ready(function() {
     var table = $('#sinistresTable').DataTable({
         scrollX: true,
-        responsive: true,
+        autoWidth: false,
         dom: '<"top"lBf>rt<"bottom"ip>',
         lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Tous"]],
         pageLength: 25,
@@ -457,23 +474,13 @@ $(document).ready(function() {
                 extend: 'excelHtml5',
                 text: '<i class="fas fa-file-excel me-1"></i> Excel',
                 className: 'btn btn-success',
-                exportOptions: {
-                    columns: ':visible:not(:last-child)',
-                    format: {
-                        body: function(data, row, column, node) {
-                            // Nettoyer les données pour l'export
-                            return $(node).text().trim() || data;
-                        }
-                    }
-                }
+                exportOptions: { columns: ':not(:last-child)' }
             },
             {
                 extend: 'pdfHtml5',
                 text: '<i class="fas fa-file-pdf me-1"></i> PDF',
                 className: 'btn btn-danger',
-                exportOptions: {
-                    columns: ':visible:not(:last-child)'
-                },
+                exportOptions: { columns: ':not(:last-child)' },
                 customize: function(doc) {
                     doc.defaultStyle.fontSize = 8;
                     doc.styles.tableHeader.fontSize = 9;
@@ -482,15 +489,14 @@ $(document).ready(function() {
                 }
             }
         ],
+        columnDefs: [
+            { targets: 15, searchable: false, orderable: false, width: '100px' }
+        ],
         initComplete: function() {
             this.api().buttons().container().appendTo('#exportButtons');
-            
-            // Appliquer la recherche
-            this.api().columns().every(function() {
+            this.api().columns().every(function(index) {
                 var column = this;
-                var header = $(column.header());
-                
-                if (header.text() !== 'Actions') {
+                if (index !== 15) { // Exclure "Actions"
                     $('input', column.footer()).on('keyup change', function() {
                         if (column.search() !== this.value) {
                             column.search(this.value).draw();
@@ -502,10 +508,7 @@ $(document).ready(function() {
     });
 
     // Initialiser les tooltips
-    $('[data-bs-toggle="tooltip"]').tooltip({
-        trigger: 'hover',
-        placement: 'top'
-    });
+    $('[data-bs-toggle="tooltip"]').tooltip({ trigger: 'hover', placement: 'top' });
 });
 </script>
 
