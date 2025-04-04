@@ -13,7 +13,7 @@
 <style>
     :root {
         --primary-color: #887630;
-        --secondary-color: #F4A261;
+        --secondary-color: #000000;
         --accent-color: #e74c3c;
         --light-color: #ecf0f1;
         --dark-color: #2c3e50;
@@ -33,7 +33,7 @@
     }
 
     .page-title {
-        color: var(--secondary-color);
+        color: #f39c12;
         font-weight: 700;
         text-align: center;
         margin-bottom: 2rem;
@@ -265,7 +265,7 @@
 <!-- Conteneur principal -->
 <div class="container">
     <h2 class="page-title">
-        <i class="fas fa-file-contract me-2"></i>Gestion des Sinistres - Assurance Flotte
+     Gestion des Sinistres - Assurance Flotte
     </h2>
 
     <div class="action-buttons">
@@ -416,22 +416,22 @@
         </tbody>
         <tfoot>
             <tr>
-                <th><input type="text" placeholder="Filtrer Numéro" class="form-control form-control-sm" /></th>
-                <th><input type="text" placeholder="Filtrer Compagnie" class="form-control form-control-sm" /></th>
-                <th><input type="text" placeholder="Filtrer Immatriculation" class="form-control form-control-sm" /></th>
-                <th><input type="text" placeholder="Filtrer Véhicule" class="form-control form-control-sm" /></th>
-                <th><input type="text" placeholder="Filtrer Chauffeur" class="form-control form-control-sm" /></th>
-                <th><input type="text" placeholder="Filtrer Fautif" class="form-control form-control-sm" /></th>
-                <th><input type="text" placeholder="Filtrer Date" class="form-control form-control-sm" /></th>
-                <th><input type="text" placeholder="Filtrer Nature" class="form-control form-control-sm" /></th>
-                <th><input type="text" placeholder="Filtrer Avancements" class="form-control form-control-sm" /></th>
-                <th><input type="text" placeholder="Filtrer Statut" class="form-control form-control-sm" /></th>
-                <th><input type="text" placeholder="Filtrer Clôture" class="form-control form-control-sm" /></th>
-                <th><input type="text" placeholder="Filtrer Règlement" class="form-control form-control-sm" /></th>
-                <th><input type="text" placeholder="Filtrer Expert" class="form-control form-control-sm" /></th>
-                <th><input type="text" placeholder="Filtrer Documents" class="form-control form-control-sm" /></th>
-                <th><input type="text" placeholder="Filtrer Commentaire" class="form-control form-control-sm" /></th>
-                <th></th>
+                <th><input type="text" placeholder="Rechercher Numéro" /></th>
+                <th><input type="text" placeholder="Compagnie" /></th>
+                <th><input type="text" placeholder="Immatriculation" /></th>
+                <th><input type="text" placeholder="Véhicule" /></th>
+                <th><input type="text" placeholder="Chauffeur" /></th>
+                <th><input type="text" placeholder="Fautif" /></th>
+                <th><input type="text" placeholder="Date" /></th>
+                <th><input type="text" placeholder="Nature" /></th>
+                <th><input type="text" placeholder="Avancement" /></th>
+                <th><input type="text" placeholder="Statut" /></th>
+                <th><input type="text" placeholder="Clôture" /></th>
+                <th><input type="text" placeholder="Règlement" /></th>
+                <th><input type="text" placeholder="Expert" /></th>
+                <th><input type="text" placeholder="Docs" /></th>
+                <th><input type="text" placeholder="Commentaire" /></th>
+                <th></th> {{-- Colonne actions, pas besoin de filtre --}}
             </tr>
         </tfoot>
     </table>
@@ -449,26 +449,9 @@
 
 <script>
 $(document).ready(function() {
-    var table = $('#sinistresTable').DataTable({
-        scrollX: true,
-        autoWidth: false,
-        dom: '<"top"lBf>rt<"bottom"ip>',
-        lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Tous"]],
-        pageLength: 25,
-        language: {
-            lengthMenu: "Afficher _MENU_ enregistrements",
-            search: "_INPUT_",
-            searchPlaceholder: "Rechercher...",
-            info: "Affichage de _START_ à _END_ sur _TOTAL_ enregistrements",
-            infoEmpty: "Aucun enregistrement disponible",
-            infoFiltered: "(filtré de _MAX_ enregistrements au total)",
-            paginate: {
-                first: "Premier",
-                last: "Dernier",
-                next: "Suivant",
-                previous: "Précédent"
-            }
-        },
+    // Initialisation de la table
+    let table = $('#sinistresTable').DataTable({
+        dom: 'lBfrtip', // 'l' pour activer le lengthMenu
         buttons: [
             {
                 extend: 'excelHtml5',
@@ -489,27 +472,37 @@ $(document).ready(function() {
                 }
             }
         ],
+        lengthMenu: [
+            [10, 25, 50, -1],
+            ['10', '25', '50', 'Tous']
+        ],
         columnDefs: [
-            { targets: 15, searchable: false, orderable: false, width: '100px' }
+            { targets: 15, searchable: false, orderable: false } // Actions column
         ],
         initComplete: function() {
             this.api().buttons().container().appendTo('#exportButtons');
+
+            // Appliquer les filtres à chaque colonne (sauf Actions)
             this.api().columns().every(function(index) {
                 var column = this;
-                if (index !== 15) { // Exclure "Actions"
-                    $('input', column.footer()).on('keyup change', function() {
+                if (index !== 15) {
+                    $('input', column.footer()).on('keyup change clear', function() {
                         if (column.search() !== this.value) {
                             column.search(this.value).draw();
                         }
                     });
                 }
             });
+
+             // Tooltips
+            $('[data-bs-toggle="tooltip"]').tooltip({ trigger: 'hover', placement: 'top' });
+        },
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/fr-FR.json',
         }
     });
-
-    // Initialiser les tooltips
-    $('[data-bs-toggle="tooltip"]').tooltip({ trigger: 'hover', placement: 'top' });
 });
 </script>
 
 @endsection
+
