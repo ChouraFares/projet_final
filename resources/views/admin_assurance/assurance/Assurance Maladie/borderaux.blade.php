@@ -157,7 +157,7 @@
     <!-- Section pour les boutons et la recherche -->
     <div class="d-flex justify-content-between align-items-center mb-3">
         <a href="{{ route('admin.assurance.AssuranceMaladie.create') }}" class="btn btn-primary btn-lg">
-            <i class="fas fa-plus"></i> Ajouter un Contrat
+            <i class="fas fa-plus"></i> Ajouter un Borderaux
         </a>
     </div>
 

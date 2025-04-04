@@ -6,7 +6,6 @@
 <style>
     :root {
         --olive: #887630;
-        --federal-blue: #00004F;
         --navy-blue: #887630;
     }
 
@@ -83,7 +82,7 @@
     }
 
     .btn-primary:hover {
-        background-color: var(--federal-blue);
+        background-color:#ae983f ;
         transform: translateY(-5px);
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     }

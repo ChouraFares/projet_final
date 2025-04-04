@@ -1,7 +1,7 @@
 <?php
 
 $host = 'localhost';
-$dbname = 'bk_food_copie';
+$dbname = 'bk_food';
 $username = 'root';
 $password = '';
 

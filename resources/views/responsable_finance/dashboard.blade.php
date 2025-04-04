@@ -5,7 +5,7 @@
 
 <style>
  
-.toast {
+ .toast {
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -15,15 +15,15 @@
     z-index: 1001;
     opacity: 0.9;
     transition: opacity 0.3s;
-}
+ }
 
-.toast.success {
+ .toast.success {
     background-color: #48bb78;
-}
+ }
 
-.toast.error {
+ .toast.error {
     background-color: #f56565;
-}
+ }
 
 
 
@@ -367,6 +367,8 @@
                 </a>
             @endif
         </div>
+
+        
     </div>
 
     <!-- Modal Notifications -->
@@ -467,6 +469,7 @@
                     </div>
                 @endif
             </div>
+
     
             <div class="notification-content" id="archived-notifications">
                 <div class="no-notifications">
