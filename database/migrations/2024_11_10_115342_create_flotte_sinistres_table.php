@@ -21,10 +21,16 @@ return new class extends Migration
             $table->enum('fautif', ['Oui', 'Non'])->nullable();
             $table->date('date_sinistre')->nullable();
             $table->string('nature_sinistre')->nullable();
-            $table->string('situation_dossier')->nullable();
+            $table->string('avancements')->nullable();
             $table->date('date_cloture_dossier')->nullable();
             $table->text('reglement')->nullable(); // Montant du règlement
             $table->string('Expert')->nullable(); // Expert en charge du dossier
+            $table->text('attachments_pdf')->nullable();
+            $table->enum('statut', ['En Cours', 'Clôturé'])->default('En Cours')->after('avancements');
+
+            $table->text('commentaire')->nullable();
+            
+
 
             $table->timestamps();
         });

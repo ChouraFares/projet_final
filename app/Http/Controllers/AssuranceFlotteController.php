@@ -126,23 +126,37 @@ class AssuranceFlotteController extends Controller
             'immatriculation' => 'nullable',
             'vehicule' => 'nullable',
             'chauffeur' => 'nullable',
-            'fautif' => 'nullable|in:Oui,Non', // Ajout de la règle "in" pour limiter les valeurs
+            'fautif' => 'nullable|in:Oui,Non',
             'date_sinistre' => 'nullable|date',
             'nature_sinistre' => 'nullable',
-            'situation_dossier' => 'nullable',
+            'avancements' => 'nullable',
             'date_cloture_dossier' => 'nullable|date',
             'reglement' => 'nullable',
             'Expert' => 'nullable',
+            'attachments_pdf' => 'nullable|file|mimes:pdf|max:2048', // Fichier PDF, max 2MB
+            'statut' => 'nullable|in:En Cours,Clôturé',
+            'commentaire' => 'nullable|string',
         ]);
-
+    
         // Générer un numéro de sinistre unique
-        $latestSinistre = FlotteSinistre::latest()->first(); // Récupération du dernier sinistre
+        $latestSinistre = FlotteSinistre::latest()->first();
         $lastId = $latestSinistre ? $latestSinistre->id + 1 : 1;
         $sinistre_num = 'SIN-' . date('Y') . '-' . str_pad($lastId, 4, '0', STR_PAD_LEFT);
-
-        // Création du sinistre avec le numéro généré
-        FlotteSinistre::create(array_merge($request->all(), ['sinistre_num' => $sinistre_num]));
-
+    
+        // Gérer l'upload du fichier PDF
+        $data = $request->all();
+        $data['sinistre_num'] = $sinistre_num;
+    
+        if ($request->hasFile('attachments_pdf')) {
+            $file = $request->file('attachments_pdf');
+            $filename = 'sinistre_' . $sinistre_num . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('sinistres_pdf', $filename, 'public'); // Stocke dans storage/app/public/sinistres_pdf
+            $data['attachments_pdf'] = $path;
+        }
+    
+        // Création du sinistre
+        FlotteSinistre::create($data);
+    
         return redirect()->route('admin.assurance.flotte.sinistres')->with('success', 'Sinistre ajouté avec succès');
     }
 
@@ -163,20 +177,36 @@ class AssuranceFlotteController extends Controller
             'immatriculation' => 'nullable',
             'vehicule' => 'nullable',
             'chauffeur' => 'nullable',
-            'fautif' => 'nullable|in:Oui,Non', // Assurer que la valeur est "Oui" ou "Non"
+            'fautif' => 'nullable|in:Oui,Non',
             'date_sinistre' => 'nullable|date',
             'nature_sinistre' => 'nullable',
-            'situation_dossier' => 'nullable',
+            'avancements' => 'nullable',
             'date_cloture_dossier' => 'nullable|date',
             'reglement' => 'nullable',
             'Expert' => 'nullable',
+            'attachments_pdf' => 'nullable|file|mimes:pdf|max:2048', // Fichier PDF, max 2MB
+            'statut' => 'nullable|in:En Cours,Clôturé',
+            'commentaire' => 'nullable|string',
         ]);
-
+    
         $sinistre = FlotteSinistre::findOrFail($id);
-
-        // Mise à jour sans modifier `sinistre_num`
-        $sinistre->update($request->except('sinistre_num'));
-
+        $data = $request->except('sinistre_num'); // Ne pas modifier sinistre_num
+    
+        // Gérer l'upload du fichier PDF
+        if ($request->hasFile('attachments_pdf')) {
+            // Supprimer l'ancien fichier s'il existe
+            if ($sinistre->attachments_pdf) {
+                Storage::disk('public')->delete($sinistre->attachments_pdf);
+            }
+            $file = $request->file('attachments_pdf');
+            $filename = 'sinistre_' . $sinistre->sinistre_num . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('sinistres_pdf', $filename, 'public');
+            $data['attachments_pdf'] = $path;
+        }
+    
+        // Mise à jour du sinistre
+        $sinistre->update($data);
+    
         return redirect()->route('admin.assurance.flotte.sinistres')->with('success', 'Sinistre mis à jour avec succès');
     }
 
