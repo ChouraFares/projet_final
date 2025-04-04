@@ -16,7 +16,7 @@
   }
     :root {
         --primary-color: #f39c12;
-        --secondary-color: #f39c12;
+        --secondary-color: #060401;
         --success-color: #27ae60;
         --warning-color: #f39c12;
         --danger-color: #e74c3c;
@@ -42,7 +42,7 @@
         font-size: 2rem;
         font-weight: 700;
         margin-bottom: 2rem;
-        color: var(--secondary-color);
+        color: #f39c12 ;
         border-bottom: 2px solid #eee;
         padding-bottom: 1rem;
     }
@@ -359,108 +359,67 @@
         </tbody>
         <tfoot>
             <tr>
-                <th><input type="text" placeholder="Filtrer..." class="form-control form-control-sm"></th>
-                <th><input type="text" placeholder="Filtrer..." class="form-control form-control-sm"></th>
-                <th><input type="text" placeholder="Filtrer..." class="form-control form-control-sm"></th>
-                <th><input type="text" placeholder="Filtrer..." class="form-control form-control-sm"></th>
-                <th><input type="text" placeholder="Filtrer..." class="form-control form-control-sm"></th>
-                <th><input type="text" placeholder="Filtrer..." class="form-control form-control-sm"></th>
-                <th><input type="text" placeholder="Filtrer..." class="form-control form-control-sm"></th>
-                <th><input type="text" placeholder="Filtrer..." class="form-control form-control-sm"></th>
-                <th><input type="text" placeholder="Filtrer..." class="form-control form-control-sm"></th>
-                <th><input type="text" placeholder="Filtrer..." class="form-control form-control-sm"></th>
-                <th><input type="text" placeholder="Filtrer..." class="form-control form-control-sm"></th>
-                <th><input type="text" placeholder="Filtrer..." class="form-control form-control-sm"></th>
-                <th><input type="text" placeholder="Filtrer..." class="form-control form-control-sm"></th>
-                <th><input type="text" placeholder="Filtrer..." class="form-control form-control-sm"></th>
-                <th><input type="text" placeholder="Filtrer..." class="form-control form-control-sm"></th>
-                <th><input type="text" placeholder="Filtrer..." class="form-control form-control-sm"></th>
-                <th><input type="text" placeholder="Filtrer..." class="form-control form-control-sm"></th>
-                <th></th>
+                <th>Numéro</th>
+                <th>Compagnie</th>
+                <th>Prime</th>
+                <th>Fournisseur</th>
+                <th>N° Facture</th>
+                <th>Montant (USD)</th>
+                <th>Montant (TND)</th>
+                <th>N° Conteneur</th>
+                <th>Date Dépôt</th>
+                <th>Transporteur</th>
+                <th>Date Incident</th>
+                <th>Lieu</th>
+                <th>MT</th>
+                <th>Date Remb.</th>
+                <th>Nature</th>
+                <th>Statut</th>
+                <th>Commentaire</th>
+                <th></th> {{-- Colonne Actions, pas de filtre --}}
             </tr>
         </tfoot>
+        
     </table>
 </div>
-
-<!-- DataTables JS -->
+<!-- jQuery et DataTables JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
 
 <script>
-$(document).ready(function() {
-    var table = $('#sinistresTable').DataTable({
-        scrollX: true,
-        autoWidth: false,
-        dom: 'lBfrtip',
-        pageLength: 10,
-        lengthMenu: [[5, 10, 20, 50, -1], [5, 10, 20, 50, "Tous"]],
-        buttons: [
-            {
-                extend: 'excelHtml5',
-                text: '<i class="fas fa-file-excel me-1"></i> Excel',
-                className: 'btn btn-success',
-                exportOptions: {
-                    columns: ':not(:last-child)',
-                    format: {
-                        body: function(data, row, column, node) {
-                            return $(node).text().trim() || data;
-                        }
-                    }
-                }
-            },
-            {
-                extend: 'pdfHtml5',
-                text: '<i class="fas fa-file-pdf me-1"></i> PDF',
-                className: 'btn btn-danger',
-                exportOptions: { columns: ':not(:last-child)' },
-                customize: function(doc) {
-                    doc.defaultStyle.fontSize = 8;
-                    doc.styles.tableHeader.fontSize = 9;
-                    doc.pageMargins = [20, 40, 20, 40];
-                    doc.content[1].table.widths = Array(doc.content[1].table.body[0].length).fill('auto');
-                }
+    $(document).ready(function () {
+        // Ajout d’un input dans chaque cellule du footer sauf pour la dernière (actions)
+        $('#sinistresTable tfoot th').each(function (i) {
+            if (i < 17) { // éviter la colonne "Actions"
+                $(this).html('<input type="text" placeholder="Rechercher..." style="width: 100%;"/>');
+            } else {
+                $(this).html('');
             }
-        ],
-        language: {
-            lengthMenu: "Afficher _MENU_ enregistrements",
-            search: "_INPUT_",
-            searchPlaceholder: "Rechercher...",
-            info: "Affichage de _START_ à _END_ sur _TOTAL_ enregistrements",
-            infoEmpty: "Aucun enregistrement disponible",
-            infoFiltered: "(filtré de _MAX_ enregistrements au total)",
-            paginate: {
-                first: "Premier",
-                last: "Dernier",
-                next: "Suivant",
-                previous: "Précédent"
-            }
-        },
-        columnDefs: [
-            { targets: 17, searchable: false, orderable: false, width: '100px' } // Actions
-        ],
-        initComplete: function() {
-            this.api().buttons().container().appendTo('#exportButtons');
-            this.api().columns().every(function(index) {
-                var column = this;
-                if (index !== 17) { // Exclure "Actions"
-                    $('input', column.footer()).on('keyup change', function() {
+        });
+
+        // Initialisation de la DataTable
+        var table = $('#sinistresTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    $('input', this.footer()).on('keyup change clear', function () {
                         if (column.search() !== this.value) {
                             column.search(this.value).draw();
                         }
                     });
-                }
-            });
-        }
+                });
+            },
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/fr-FR.json'
+            }
+        });
     });
-
-    $('[data-bs-toggle="tooltip"]').tooltip({ trigger: 'hover', placement: 'top' });
-});
 </script>
+
 
 @endsection
