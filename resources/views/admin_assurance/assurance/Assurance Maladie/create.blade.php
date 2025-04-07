@@ -66,10 +66,6 @@
             <input type="text" class="form-control" id="nom_adherent" name="nom_adherent" required>
         </div>
 
-        <div class="mb-3">
-            <label for="matricule" class="form-label"><i class="fas fa-id-card"></i> Matricule</label>
-            <input type="text" class="form-control" id="matricule" name="matricule" required>
-        </div>
 
         <div class="mb-3">
             <label for="date_de_soin" class="form-label"><i class="fas fa-calendar-check"></i> Date de Soin</label>
