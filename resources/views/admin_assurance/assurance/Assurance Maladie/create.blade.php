@@ -34,7 +34,7 @@
 </style>
 
 <div class="container">
-    <h2>Créer une Nouvelle Assurance Maladie</h2>
+    <h2>Créer Un Nouvelle Borderaux</h2>
 
     @if ($errors->any())
         <div class="alert alert-danger">
