@@ -263,8 +263,7 @@
             <tbody>
                 @foreach ($assurances as $assurance)
                     <tr>
-                        <td>{{ \Carbon\Carbon::parse($assurance->date_envoi)->format('d/m/Y') }}</td>
-                        <td><strong>{{ $assurance->numero_borderaux }}</strong></td>
+                        <td>{{ \Carbon\Carbon::parse($assurance->date_envoi)->format('d/m/Y') }}</td>                        <td><strong>{{ $assurance->numero_borderaux }}</strong></td>
                         <td>{{ $assurance->bulletin_numero }}</td>
                         <td>{{ $assurance->nom_adherent }}</td>
                         <td>{{ \Carbon\Carbon::parse($assurance->date_de_soin)->format('d/m/Y') }}</td>
