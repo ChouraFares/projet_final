@@ -47,6 +47,11 @@ class AuthController extends Controller
                 return redirect()->route('responsable_finance.dashboard');
             }
 
+            if ($user->role === 'supply_chain') {
+                return redirect()->route('supply_chain.dashboard');
+            }
+
+
             if ($user->role === 'user') {
                 return redirect()->route('user.dashboard');
             }

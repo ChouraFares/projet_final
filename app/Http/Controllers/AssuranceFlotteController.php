@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\FlotteContract;
 use App\Models\FlotteSinistre;
+use App\Notifications\NewSinistreNotification;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
 class AssuranceFlotteController extends Controller
@@ -133,7 +137,7 @@ class AssuranceFlotteController extends Controller
             'date_cloture_dossier' => 'nullable|date',
             'reglement' => 'nullable',
             'Expert' => 'nullable',
-            'attachments_pdf' => 'nullable|file|mimes:pdf|max:2048', // Fichier PDF, max 2MB
+            'attachments_pdf' => 'nullable|file|mimes:pdf|max:2048',
             'statut' => 'nullable|in:En Cours,Clôturé',
             'commentaire' => 'nullable|string',
         ]);
@@ -150,16 +154,23 @@ class AssuranceFlotteController extends Controller
         if ($request->hasFile('attachments_pdf')) {
             $file = $request->file('attachments_pdf');
             $filename = 'sinistre_' . $sinistre_num . '_' . time() . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('sinistres_pdf', $filename, 'public'); // Stocke dans storage/app/public/sinistres_pdf
+            $path = $file->storeAs('sinistres_pdf', $filename, 'public');
             $data['attachments_pdf'] = $path;
         }
     
         // Création du sinistre
-        FlotteSinistre::create($data);
+        $sinistre = FlotteSinistre::create($data);
     
+        // Envoyer la notification aux utilisateurs avec le rôle supply_chain
+        $supplyChainUsers = User::where('role', 'supply_chain')->get();
+        foreach ($supplyChainUsers as $user) {
+            // Envoyer l'email directement sans passer par la queue
+            Mail::to($user->email)->send(new \App\Mail\NewSinistreMail($sinistre));
+        
+        }    
         return redirect()->route('admin.assurance.flotte.sinistres')->with('success', 'Sinistre ajouté avec succès');
     }
-
+    
 
     // Modifier un sinistre
     public function editSinistre($id)

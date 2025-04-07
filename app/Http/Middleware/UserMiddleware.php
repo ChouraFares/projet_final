@@ -10,7 +10,7 @@ class UserMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        $allowedRoles = ['user', 'responsable_finance', 'admin_assurance', 'super_admin_transit', 'TransitAgent','admin'];
+        $allowedRoles = ['user', 'responsable_finance', 'admin_assurance', 'super_admin_transit', 'TransitAgent','admin','supply_chain'];
 
         if (Auth::check() && in_array(Auth::user()->role, $allowedRoles)) {
             return $next($request);

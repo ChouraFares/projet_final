@@ -13,7 +13,7 @@ class AdminAssurance
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && in_array(Auth::user()->role, ['DirecteurGeneral','admin_assurance', 'responsable_finance', 'admin'])) {
+        if (Auth::check() && in_array(Auth::user()->role, ['DirecteurGeneral','admin_assurance', 'responsable_finance', 'admin','supply_chain'])) {
             return $next($request);
         }
     

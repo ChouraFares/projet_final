@@ -31,6 +31,7 @@ use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\DirecteurGeneral;
 use App\Http\Middleware\ResponsableFinance;
 use App\Http\Middleware\super_admin_transit;
+use App\Http\Middleware\supply_chain;
 use App\Http\Middleware\TransitAgentAchat;
 use App\Http\Middleware\UserMiddleware;
 use Illuminate\Support\Facades\Auth;
@@ -547,3 +548,11 @@ Route::middleware([DirecteurGeneral::class])->group(function () {
 
 
 
+Route::middleware([supply_chain::class])->group(function () {
+    Route::get('/BKFOOD/Portail/Supply/Chain/dashboard', function () {
+        return view('supply_chain.dashboard');
+
+        
+       // resources\views\supply_chain\dashboard.blade.php
+    })->name('supply_chain.dashboard');
+});
