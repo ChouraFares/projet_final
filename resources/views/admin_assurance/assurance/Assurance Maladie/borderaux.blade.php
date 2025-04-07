@@ -254,7 +254,6 @@
                     <th>N° Bordereau</th>
                     <th>N° Bulletin</th>
                     <th>Adhérent</th>
-                    <th>Matricule</th>
                     <th>Date Soin</th>
                     <th>Statut</th>
                     <th>Réclamation</th>
@@ -268,7 +267,6 @@
                         <td><strong>{{ $assurance->numero_borderaux }}</strong></td>
                         <td>{{ $assurance->bulletin_numero }}</td>
                         <td>{{ $assurance->nom_adherent }}</td>
-                        <td>{{ $assurance->matricule }}</td>
                         <td>{{ \Carbon\Carbon::parse($assurance->date_de_soin)->format('d/m/Y') }}</td>
                         <td>
                             @if ($assurance->status == 'Remis')
