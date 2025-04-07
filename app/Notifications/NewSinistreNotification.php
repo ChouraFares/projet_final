@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Notifications;
-
 use App\Models\FlotteSinistre;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;

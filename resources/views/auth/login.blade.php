@@ -20,6 +20,41 @@
 
 
     <style>
+        /* Styles pour les messages d'erreur */
+.alert {
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.invalid-feedback {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+.btn-close {
+    padding: 0.5rem;
+    background-size: 0.75rem;
+}
+
+
         :root {
             --olive: #887630;
             --federal-blue: #2A4B67;
@@ -159,7 +194,7 @@
 </head>
 <body>
     <div class="login-wrapper">
-        <!-- Image Section (Outside login container) -->
+        <!-- Image Section -->
         <div class="login-image"></div>
         
         <!-- Login Form Section -->
@@ -171,17 +206,47 @@
                 
                 <h3 class="login-title">Connexion à votre espace</h3>
                 
+                <!-- Afficher les erreurs générales -->
+                @if($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                
+                <!-- Afficher le message de statut (comme pour le mot de passe réinitialisé) -->
+                @if(session('status'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('status') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
                     
                     <div class="form-outline mb-4">
                         <label class="form-label" for="email">Adresse Email</label>
-                        <input type="email" id="email" name="email" class="form-control form-control-lg" required autofocus />
+                        <input type="email" id="email" name="email" class="form-control form-control-lg @error('email') is-invalid @enderror" value="{{ old('email') }}" required autofocus />
+                        @error('email')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     
                     <div class="form-outline mb-4">
                         <label class="form-label" for="password">Mot de passe</label>
-                        <input type="password" id="password" name="password" class="form-control form-control-lg" required />
+                        <input type="password" id="password" name="password" class="form-control form-control-lg @error('password') is-invalid @enderror" required />
+                        @error('password')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     
                     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -190,8 +255,6 @@
                             <label class="form-check-label" for="remember">Se souvenir de moi</label>
                         </div>
                         <a href="{{ route('password.request') }}" class="text-primary">Mot de passe oublié?</a>
-                    
-                    
                     </div>
                     
                     <button type="submit" class="btn btn-login mb-4">
