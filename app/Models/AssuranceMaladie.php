@@ -16,7 +16,6 @@ class AssuranceMaladie extends Model
         'numero_borderaux',
         'bulletin_numero',
         'nom_adherent',
-        'matricule',
         'date_de_soin',
         'status',
         'reclamation',
