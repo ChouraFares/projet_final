@@ -16,12 +16,13 @@ class AssuranceMaladieContratsController extends Controller
 return view('admin_assurance.assurance.Assurance Maladie.index');
     }
 
-        public function index()
+    public function index()
     {
-        $assurances = AssuranceMaladie::all();
+        // Trier par date_envoi en ordre décroissant (les plus récents en premier)
+        $assurances = AssuranceMaladie::orderBy('date_envoi', 'desc')->get();
+        
         return view('admin_assurance.assurance.Assurance Maladie.borderaux', compact('assurances'));
     }
-
     /**
      * Afficher le formulaire de création.
      */
