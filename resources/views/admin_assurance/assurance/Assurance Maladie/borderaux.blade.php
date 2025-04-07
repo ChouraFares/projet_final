@@ -238,7 +238,7 @@
             <i class="fas fa-shield-alt me-2"></i>Gestion des Bordereaux d'Assurance Maladie
         </h1>
         <a href="{{ route('admin.assurance.AssuranceMaladie.create') }}" class="btn btn-primary">
-            <i class="fas fa-plus-circle me-1"></i> Nouveau Bordereau
+            <i class="fas fa-plus-circle me-1"></i> Nouveau Borderaux
         </a>
     </div>
 

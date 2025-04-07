@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('numero_borderaux');
             $table->string('bulletin_numero');
             $table->string('nom_adherent');
-            $table->string('matricule');
             $table->date('date_de_soin');
             $table->enum('status', ['Remis', 'Non Remis', 'Cloturé']);
             $table->text('reclamation')->nullable();
