@@ -387,7 +387,7 @@
                     @endif
                 </td>
                 <td class="comment-cell" title="{{ $sinistre->commentaire ?? '' }}">
-                    {{ $sinistre->commentaire ? Str::limit($sinistre->commentaire, 30) : 'Aucun' }}
+                    {{ $sinistre->commentaire ? Str::limit($sinistre->commentaire, 70) : 'Aucun' }}
                 </td>
                 <td class="actions-cell">
                     <div class="action-btns">
