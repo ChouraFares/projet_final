@@ -266,6 +266,49 @@
         border: 1px solid #ced4da;
         padding: 0.3rem;
     }
+    .comment-cell {
+        cursor: pointer;
+        position: relative;
+    }
+
+    .comment-cell:hover {
+        background-color: rgba(52, 152, 219, 0.1);
+    }
+
+    /* Style pour la modale */
+    .comment-modal .modal-content {
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .comment-modal .modal-header {
+        background-color: #f39c12;
+        color: white;
+        border-bottom: none;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .comment-modal .modal-body {
+        padding: 20px;
+        white-space: pre-wrap;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .comment-modal .modal-footer {
+        border-top: none;
+        justify-content: center;
+    }
+
+    /* Style pour le texte tronqué */
+    .truncated-comment {
+        display: inline-block;
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 </style>
 
 <div class="container-fluid">
@@ -367,7 +410,7 @@
                     <span class="badge">{{ $sinistre->statut_du_dossier }}</span>
                     @endswitch
                 </td>
-                <td data-label="Commentaire">{{ Str::limit($sinistre->commentaire, 20) }}</td>
+                <td data-label="Commentaire">{{ Str::limit($sinistre->commentaire, 60) }}</td>
                 <td data-label="Actions" class="actions-column">
                     <a href="{{ route('edit_maritime_sinistres', $sinistre->id) }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Modifier">
                         <i class="fas fa-edit"></i>
