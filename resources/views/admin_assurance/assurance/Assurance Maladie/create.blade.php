@@ -3,90 +3,127 @@
 @section('title', 'Créer une Assurance Maladie')
 
 @section('content')
-<style>
-    .container {
-        max-width: 600px;
-        margin: 20px auto;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-label {
-        font-weight: 500;
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    .form-control {
-        width: 100%;
-        border-radius: 5px;
-        padding: 8px;
-        font-size: 14px;
-    }
-
-    .btn {
-        width: 100%;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-    }
-</style>
-
-<div class="container">
-    <h2>Créer Un Nouvelle Borderaux</h2>
-
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+<div class="dashboard">
+    <div class="header">
+        <div>
+            <h2><i class="fas fa-file-medical me-2"></i>Créer un Nouveau Bordereau</h2>
         </div>
-    @endif
+    </div>
 
-    <form action="{{ route('AssuranceMaladieStore') }}" method="POST">
-        @csrf
+    <div class="form-container">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-        <div class="mb-3">
-            <label for="date_envoi" class="form-label">Date d'Envoi</label>
-            <input type="date" name="date_envoi" id="date_envoi" class="form-control" required>
-        </div>
+        <form action="{{ route('AssuranceMaladieStore') }}" method="POST" id="assuranceMaladieForm">
+            @csrf
 
-     
+            <div class="row">
+                <!-- Première colonne -->
+                <div class="card">
+                    <!-- Date d'Envoi -->
+                    <div class="form-group">
+                        <label for="date_envoi" class="form-label">
+                            <i class="fas fa-calendar-alt me-1"></i>Date d'Envoi
+                        </label>
+                        <input type="date" name="date_envoi" id="date_envoi" 
+                               class="form-control @error('date_envoi') is-invalid @enderror" 
+                               value="{{ old('date_envoi') }}" required>
+                        @error('date_envoi')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-        <div class="mb-3">
-            <label for="bulletin_numero" class="form-label"><i class="fas fa-file-alt"></i> Numéro Bulletin</label>
-            <input type="text" class="form-control" id="bulletin_numero" name="bulletin_numero" required>
-        </div>
+                    <!-- Numéro Bulletin -->
+                    <div class="form-group">
+                        <label for="bulletin_numero" class="form-label">
+                            <i class="fas fa-file-alt me-1"></i>Numéro Bulletin
+                        </label>
+                        <input type="text" class="form-control @error('bulletin_numero') is-invalid @enderror" 
+                               id="bulletin_numero" name="bulletin_numero" 
+                               value="{{ old('bulletin_numero') }}" required>
+                        @error('bulletin_numero')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-        <div class="mb-3">
-            <label for="nom_adherent" class="form-label"><i class="fas fa-user"></i> Nom Adhérent</label>
-            <input type="text" class="form-control" id="nom_adherent" name="nom_adherent" required>
-        </div>
+                    <!-- Nom Adhérent -->
+                    <div class="form-group">
+                        <label for="nom_adherent" class="form-label">
+                            <i class="fas fa-user me-1"></i>Nom Adhérent
+                        </label>
+                        <input type="text" class="form-control @error('nom_adherent') is-invalid @enderror" 
+                               id="nom_adherent" name="nom_adherent" 
+                               value="{{ old('nom_adherent') }}" required>
+                        @error('nom_adherent')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
 
+                <!-- Deuxième colonne -->
+                <div class="card">
+                    <!-- Date de Soin -->
+                    <div class="form-group">
+                        <label for="date_de_soin" class="form-label">
+                            <i class="fas fa-calendar-check me-1"></i>Date de Soin
+                        </label>
+                        <input type="date" class="form-control @error('date_de_soin') is-invalid @enderror" 
+                               id="date_de_soin" name="date_de_soin" 
+                               value="{{ old('date_de_soin') }}" required>
+                        @error('date_de_soin')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-        <div class="mb-3">
-            <label for="date_de_soin" class="form-label"><i class="fas fa-calendar-check"></i> Date de Soin</label>
-            <input type="date" class="form-control" id="date_de_soin" name="date_de_soin" required>
-        </div>
+                    <!-- Statut -->
+                    <div class="form-group">
+                        <label for="status" class="form-label">
+                            <i class="fas fa-info-circle me-1"></i>Statut
+                        </label>
+                        <select class="department-select @error('status') is-invalid @enderror" 
+                                id="status" name="status" required>
+                            <option value="Remis" {{ old('status') == 'Remis' ? 'selected' : '' }}>Remis</option>
+                            <option value="Non Remis" {{ old('status') == 'Non Remis' ? 'selected' : '' }}>Non Remis</option>
+                            <option value="Cloturé" {{ old('status') == 'Cloturé' ? 'selected' : '' }}>Clôturé</option>
+                        </select>
+                        @error('status')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-        <div class="mb-3">
-            <label for="status" class="form-label"><i class="fas fa-info-circle"></i> Statut</label>
-            <select class="form-control" id="status" name="status" required>
-                <option value="Remis">Remis</option>
-                <option value="Non Remis">Non Remis</option>
-                <option value="Cloturé">Clôturé</option>
-            </select>
-        </div>
+                    <!-- Réclamations -->
+                    <div class="form-group">
+                        <label for="reclamation" class="form-label">
+                            <i class="fas fa-comment-dots me-1"></i>Réclamations
+                        </label>
+                        <textarea class="form-control @error('reclamation') is-invalid @enderror" 
+                                  id="reclamation" name="reclamation" 
+                                  rows="4">{{ old('reclamation') }}</textarea>
+                        @error('reclamation')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+            </div>
 
-        <div class="mb-3">
-            <label for="reclamation" class="form-label"><i class="fas fa-comment-dots"></i> Réclamations</label>
-            <textarea class="form-control" id="reclamation" name="reclamation" rows="3"></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Enregistrer</button>
-    </form>
+            <!-- Boutons d'action -->
+            <div class="btn-group" style="margin-top: 30px; justify-content: center;">
+                <a href="{{ url()->previous() }}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Retour
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-2"></i>Enregistrer
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
+
 @endsection
