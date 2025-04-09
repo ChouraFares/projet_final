@@ -19,7 +19,7 @@
                 <!-- Assureur -->
                 <div class="form-group">
                     <label for="compagnie_assurance"> Compagnie Assurance</label>
-                    <input type="text" id="compagnie_assurance" name="compagnie_assurance" class="form-control @error('compagnie_assurance') is-invalid @enderror" value="{{ old('compagnie_assurance', $sinistre->compagnie_assurance) }}" required>
+                    <input type="text" id="compagnie_assurance" name="compagnie_assurance" class="form-control @error('compagnie_assurance') is-invalid @enderror" value="{{ old('compagnie_assurance', $sinistre->compagnie_assurance) }}" >
                     @error('compagnie_assurance')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -28,7 +28,7 @@
                 <!-- Nature du Sinistre -->
                 <div class="form-group">
                     <label for="nature_sinistre">Nature du Sinistre</label>
-                    <input type="text" id="nature_sinistre" name="nature_sinistre" class="form-control @error('nature_sinistre') is-invalid @enderror" value="{{ old('nature_sinistre', $sinistre->nature_sinistre) }}" required>
+                    <input type="text" id="nature_sinistre" name="nature_sinistre" class="form-control @error('nature_sinistre') is-invalid @enderror" value="{{ old('nature_sinistre', $sinistre->nature_sinistre) }}" >
                     @error('nature_sinistre')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -37,7 +37,7 @@
                 <!-- Lieu du Sinistre -->
                 <div class="form-group">
                     <label for="lieu_sinistre">Lieu du Sinistre</label>
-                    <input type="text" id="lieu_sinistre" name="lieu_sinistre" class="form-control @error('lieu_sinistre') is-invalid @enderror" value="{{ old('lieu_sinistre', $sinistre->lieu_sinistre) }}" required>
+                    <input type="text" id="lieu_sinistre" name="lieu_sinistre" class="form-control @error('lieu_sinistre') is-invalid @enderror" value="{{ old('lieu_sinistre', $sinistre->lieu_sinistre) }}" >
                     @error('lieu_sinistre')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -46,7 +46,7 @@
                 <!-- Date du Sinistre -->
                 <div class="form-group">
                     <label for="date_sinistre">Date du Sinistre</label>
-                    <input type="date" id="date_sinistre" name="date_sinistre" class="form-control @error('date_sinistre') is-invalid @enderror" value="{{ old('date_sinistre', $sinistre->date_sinistre) }}" required>
+                    <input type="date" id="date_sinistre" name="date_sinistre" class="form-control @error('date_sinistre') is-invalid @enderror" value="{{ old('date_sinistre', $sinistre->date_sinistre) }}" >
                     @error('date_sinistre')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
