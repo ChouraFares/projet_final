@@ -64,7 +64,7 @@
                 <!-- Charge -->
                 <div class="form-group">
                     <label for="charge">Charge</label>
-                    <input type="number" id="charge" name="charge" class="form-control @error('charge') is-invalid @enderror" value="{{ old('charge', $sinistre->charge) }}" required>
+                    <input type="number" id="charge" name="charge" class="form-control @error('charge') is-invalid @enderror" value="{{ old('charge', $sinistre->charge) }}" >
                     @error('charge')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -75,7 +75,7 @@
                 <!-- Perte -->
                 <div class="form-group">
                     <label for="perte">Perte</label>
-                    <input type="number" id="perte" name="perte" class="form-control @error('perte') is-invalid @enderror" value="{{ old('perte', $sinistre->perte) }}" required>
+                    <input type="number" id="perte" name="perte" class="form-control @error('perte') is-invalid @enderror" value="{{ old('perte', $sinistre->perte) }}" >
                     @error('perte')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -84,7 +84,7 @@
                 <!-- Responsable -->
                 <div class="form-group">
                     <label for="responsable">Responsable</label>
-                    <input type="text" id="responsable" name="responsable" class="form-control @error('responsable') is-invalid @enderror" value="{{ old('responsable', $sinistre->responsable) }}" required>
+                    <input type="text" id="responsable" name="responsable" class="form-control @error('responsable') is-invalid @enderror" value="{{ old('responsable', $sinistre->responsable) }}" >
                     @error('responsable')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
