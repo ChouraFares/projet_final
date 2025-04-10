@@ -27,6 +27,7 @@ return view('admin_assurance.assurance.Assurance Maladie.index');
      return view('admin_assurance.assurance.Assurance Maladie.borderaux', compact('assurances'));
  }
 
+
     
 
     /**
@@ -61,10 +62,17 @@ return view('admin_assurance.assurance.Assurance Maladie.index');
             'date_de_soin' => $request->date_de_soin,
             'status' => $request->status,
             'reclamation' => $request->reclamation,
+            'created_at' => now() // Force la date/heure actuelle
         ]);
     
         return redirect()->route('admin.assurance.AssuranceMaladie.contrats')
-                         ->with('success', 'Contrat ajouté avec succès.');
+        ->with('success', 'Contrat ajouté avec succès.')
+        ->withHeaders([
+            'Cache-Control' => 'no-cache, no-store, must-revalidate',
+            'Pragma' => 'no-cache',
+            'Expires' => '0'
+        ]);
+        
     }
 
     /**

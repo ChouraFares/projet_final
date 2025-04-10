@@ -19,12 +19,9 @@ class AssuranceMaladie extends Model
         'date_de_soin',
         'status',
         'reclamation',
+        'created_at' // Ajoutez cette ligne
     ];
 
-    public $timestamps = true;
-    public function getCreatedAtAttribute($value)
-{
-    return $value; // Retourne la valeur originale
-}
+
 
 }

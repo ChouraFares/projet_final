@@ -101,9 +101,12 @@ $(document).ready(function() {
         pageLength: -1, // Afficher tous les enregistrements
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Tous"]],
         order: [[0, 'desc']], // Tri par la première colonne (created_at) en ordre décroissant
+        stateSave: false, // Important : désactive la sauvegarde de l'état
+
         language: {
             url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json'
         },
+        
         buttons: [
             {
                 extend: 'excelHtml5',
