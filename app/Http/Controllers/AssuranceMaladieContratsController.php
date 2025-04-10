@@ -11,6 +11,9 @@ class AssuranceMaladieContratsController extends Controller
     /**
      * Afficher la liste des contrats d'assurance maladie.
      */
+
+
+
     public function bouttonsAssuranceMaladie()
     {
 return view('admin_assurance.assurance.Assurance Maladie.index');
@@ -20,11 +23,9 @@ return view('admin_assurance.assurance.Assurance Maladie.index');
  // app\Http\Controllers\AssuranceMaladieContratsController.php
 public function index()
 {
-    // Récupérer tous les enregistrements
-    $assurances = AssuranceMaladie::orderBy('date_envoi', 'desc')->get();
+    // Récupérer tous les enregistrements, triés par date de création (le plus récent en haut)
+    $assurances = AssuranceMaladie::orderBy('created_at', 'desc')->get();
     
-    // Vérifier les données
-
     return view('admin_assurance.assurance.Assurance Maladie.borderaux', compact('assurances'));
 }
 
@@ -51,9 +52,9 @@ public function index()
             'status' => 'required|in:Remis,Non Remis,Cloture',
             'reclamation' => 'nullable|string',
         ]);
-
+    
         $numero_borderaux = $this->generateNumeroBordereau($request->date_envoi);
-
+    
         AssuranceMaladie::create([
             'date_envoi' => $request->date_envoi,
             'numero_borderaux' => $numero_borderaux,
@@ -63,7 +64,7 @@ public function index()
             'status' => $request->status,
             'reclamation' => $request->reclamation,
         ]);
-
+    
         return redirect()->route('admin.assurance.AssuranceMaladie.contrats')
                          ->with('success', 'Contrat ajouté avec succès.');
     }

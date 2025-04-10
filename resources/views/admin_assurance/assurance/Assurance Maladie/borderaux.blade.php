@@ -33,6 +33,7 @@
         <table id="contractsTable" class="table table-hover">
             <thead>
                 <tr>
+                    <th>Date Création</th> <!-- Nouvelle colonne -->
                     <th>Date Envoi</th>
                     <th>N° Bordereau</th>
                     <th>N° Bulletin</th>
@@ -46,6 +47,7 @@
             <tbody>
                 @foreach ($assurances as $assurance)
                     <tr>
+                        <td>{{ \Carbon\Carbon::parse($assurance->created_at)->format('d/m/Y H:i') }}</td> <!-- Nouvelle colonne -->
                         <td>{{ \Carbon\Carbon::parse($assurance->date_envoi)->format('d/m/Y') }}</td>
                         <td><strong>{{ $assurance->numero_borderaux }}</strong></td>
                         <td>{{ $assurance->bulletin_numero }}</td>

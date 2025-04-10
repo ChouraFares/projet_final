@@ -21,5 +21,6 @@ class AssuranceMaladie extends Model
         'reclamation',
     ];
 
-
+    public $timestamps = true;
+    
 }
