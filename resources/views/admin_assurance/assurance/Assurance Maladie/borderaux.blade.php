@@ -47,8 +47,14 @@
             <tbody>
                 @foreach ($assurances as $assurance)
                     <tr>
-                        <td>{{ \Carbon\Carbon::parse($assurance->created_at)->format('d/m/Y H:i') }}</td>
-                        <td>{{ \Carbon\Carbon::parse($assurance->date_envoi)->format('d/m/Y') }}</td>
+                        @if ($assurance->created_at)
+                        {{ \Carbon\Carbon::parse($assurance->created_at)->format('d/m/Y H:i') }}
+                    @else
+                        Non défini
+                    @endif
+                    
+                    
+                    <td>{{ \Carbon\Carbon::parse($assurance->date_envoi)->format('d/m/Y') }}</td>
                         <td><strong>{{ $assurance->numero_borderaux }}</strong></td>
                         <td>{{ $assurance->bulletin_numero }}</td>
                         <td>{{ $assurance->nom_adherent }}</td>

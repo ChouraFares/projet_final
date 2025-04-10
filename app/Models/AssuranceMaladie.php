@@ -22,5 +22,9 @@ class AssuranceMaladie extends Model
     ];
 
     public $timestamps = true;
-    
+    public function getCreatedAtAttribute($value)
+{
+    return $value; // Retourne la valeur originale
+}
+
 }
