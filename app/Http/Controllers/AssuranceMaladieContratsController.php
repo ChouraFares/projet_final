@@ -21,13 +21,11 @@ return view('admin_assurance.assurance.Assurance Maladie.index');
 
 
  // app\Http\Controllers\AssuranceMaladieContratsController.php
-public function index()
-{
-    // Récupérer tous les enregistrements, triés par date de création (le plus récent en haut)
-    $assurances = AssuranceMaladie::orderBy('created_at', 'desc')->get();
-    
-    return view('admin_assurance.assurance.Assurance Maladie.borderaux', compact('assurances'));
-}
+ public function index()
+ {
+     $assurances = AssuranceMaladie::orderBy('created_at', 'desc')->get();
+     return view('admin_assurance.assurance.Assurance Maladie.borderaux', compact('assurances'));
+ }
 
     
 

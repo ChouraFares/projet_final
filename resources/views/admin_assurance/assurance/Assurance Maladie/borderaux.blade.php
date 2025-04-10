@@ -33,7 +33,7 @@
         <table id="contractsTable" class="table table-hover">
             <thead>
                 <tr>
-                    <th>Date Création</th> <!-- Nouvelle colonne -->
+                    <th>Date Création</th> <!-- Colonne pour created_at -->
                     <th>Date Envoi</th>
                     <th>N° Bordereau</th>
                     <th>N° Bulletin</th>
@@ -47,7 +47,7 @@
             <tbody>
                 @foreach ($assurances as $assurance)
                     <tr>
-                        <td>{{ \Carbon\Carbon::parse($assurance->created_at)->format('d/m/Y H:i') }}</td> <!-- Nouvelle colonne -->
+                        <td>{{ \Carbon\Carbon::parse($assurance->created_at)->format('d/m/Y H:i') }}</td>
                         <td>{{ \Carbon\Carbon::parse($assurance->date_envoi)->format('d/m/Y') }}</td>
                         <td><strong>{{ $assurance->numero_borderaux }}</strong></td>
                         <td>{{ $assurance->bulletin_numero }}</td>
@@ -100,6 +100,7 @@ $(document).ready(function() {
         dom: '<"top"lfB>rt<"bottom"i>',
         pageLength: -1, // Afficher tous les enregistrements
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Tous"]],
+        order: [[0, 'desc']], // Tri par la première colonne (created_at) en ordre décroissant
         language: {
             url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json'
         },
