@@ -1,69 +1,177 @@
 @extends('layouts.app')
-@section('title', 'Ajouter Un Bris De Machine')
-@section('content')
-    <div class="container">
-        <h2>Créer un Contrat d'Assurance Bris de Machine</h2>
 
+@section('title', 'Ajouter Un Bris De Machine')
+
+@section('content')
+<div class="dashboard">
+    <div class="header">
+        <div>
+            <h2><i class="fas fa-tools me-2"></i>Créer un Contrat d'Assurance Bris de Machine</h2>
+        </div>
+    </div>
+
+    <div class="form-container">
         <!-- Affichage des messages de succès ou d'erreur -->
-        @if(session('success'))
+        @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
         @endif
 
-        <form action="{{ route('BrisDeMachineStore') }}" method="POST" enctype="multipart/form-data">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form action="{{ route('BrisDeMachineStore') }}" method="POST" enctype="multipart/form-data" id="createBrisMachineForm">
             @csrf
 
-            <div class="form-group">
-                <label for="compagnie_assurance">Compagnie d'Assurance</label>
-                <input type="text" class="form-control" id="compagnie_assurance" name="compagnie_assurance" required>
+            <div class="row">
+                <!-- Première colonne -->
+                <div class="card">
+                    <div class="form-group">
+                        <label for="compagnie_assurance" class="form-label">Compagnie d'Assurance</label>
+                        <input type="text" class="form-control @error('compagnie_assurance') is-invalid @enderror" 
+                               id="compagnie_assurance" name="compagnie_assurance" 
+                               value="{{ old('compagnie_assurance') }}" required>
+                        @error('compagnie_assurance')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ref_contrat" class="form-label">Référence du Contrat</label>
+                        <input type="text" class="form-control @error('ref_contrat') is-invalid @enderror" 
+                               id="ref_contrat" name="ref_contrat" 
+                               value="{{ old('ref_contrat') }}" required>
+                        @error('ref_contrat')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date_effet" class="form-label">Date d'Effet</label>
+                        <input type="date" class="form-control @error('date_effet') is-invalid @enderror" 
+                               id="date_effet" name="date_effet" 
+                               value="{{ old('date_effet') }}" required>
+                        @error('date_effet')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- Deuxième colonne -->
+                <div class="card">
+                    <div class="form-group">
+                        <label for="echeance" class="form-label">Échéance</label>
+                        <input type="date" class="form-control @error('echeance') is-invalid @enderror" 
+                               id="echeance" name="echeance" 
+                               value="{{ old('echeance') }}" required>
+                        @error('echeance')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="condition_renouvellement" class="form-label">Condition de Renouvellement</label>
+                        <input type="text" class="form-control @error('condition_renouvellement') is-invalid @enderror" 
+                               id="condition_renouvellement" name="condition_renouvellement" 
+                               value="{{ old('condition_renouvellement') }}">
+                        @error('condition_renouvellement')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="avenant" class="form-label">Avenant</label>
+                        <select class="form-control @error('avenant') is-invalid @enderror" 
+                                id="avenant" name="avenant" required>
+                            <option value="oui" {{ old('avenant') == 'oui' ? 'selected' : '' }}>Oui</option>
+                            <option value="non" {{ old('avenant') == 'non' ? 'selected' : '' }}>Non</option>
+                        </select>
+                        @error('avenant')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- Troisième colonne -->
+                <div class="card">
+                    <div class="form-group">
+                        <label for="objet_avenant" class="form-label">Objet Avenant</label>
+                        <input type="text" class="form-control @error('objet_avenant') is-invalid @enderror" 
+                               id="objet_avenant" name="objet_avenant" 
+                               value="{{ old('objet_avenant') }}">
+                        @error('objet_avenant')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="attachement_contrat" class="form-label">Attachement du Contrat</label>
+                        <input type="file" class="form-control @error('attachement_contrat') is-invalid @enderror" 
+                               id="attachement_contrat" name="attachement_contrat">
+                        @error('attachement_contrat')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="attachement_avenant" class="form-label">Attachement de l'Avenant</label>
+                        <input type="file" class="form-control @error('attachement_avenant') is-invalid @enderror" 
+                               id="attachement_avenant" name="attachement_avenant">
+                        @error('attachement_avenant')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="ref_contrat">Référence du Contrat</label>
-                <input type="text" class="form-control" id="ref_contrat" name="ref_contrat" required>
+            <!-- Boutons d'action -->
+            <div class="btn-group" style="margin-top: 30px; justify-content: center;">
+                <a href="{{ url()->previous() }}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Retour
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-2"></i>Créer Contrat
+                </button>
             </div>
-
-            <div class="form-group">
-                <label for="date_effet">Date d'Effet</label>
-                <input type="date" class="form-control" id="date_effet" name="date_effet" required>
-            </div>
-
-            <div class="form-group">
-                <label for="echeance">Echéance</label>
-                <input type="date" class="form-control" id="echeance" name="echeance" required>
-            </div>
-
-            <div class="form-group">
-                <label for="condition_renouvellement">Condition de Renouvellement</label>
-                <input type="text" class="form-control" id="condition_renouvellement" name="condition_renouvellement">
-            </div>
-
-            <div class="form-group">
-                <label for="avenant">Avenant</label>
-                <select class="form-control" id="avenant" name="avenant" required style="width: 50%;">
-                    <option value="oui">Oui</option>
-                    <option value="non">Non</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="objet_avenant">Objet Avenant</label>
-                <input type="text" class="objet_avenant" id="objet_avenant" name="objet_avenant">
-            </div>
-
-
-            <div class="form-group">
-                <label for="attachement_contrat">Attachement du Contrat</label>
-                <input type="file" class="form-control" id="attachement_contrat" name="attachement_contrat">
-            </div>
-
-            <div class="form-group">
-                <label for="attachement_avenant">Attachement de l'Avenant</label>
-                <input type="file" class="form-control" id="attachement_avenant" name="attachement_avenant">
-            </div>
-
-            <button type="submit" class="btn btn-primary">Créer Contrat</button>
         </form>
     </div>
+</div>
+
+@push('scripts')
+<script>
+    // Validation côté client
+    document.getElementById('createBrisMachineForm').addEventListener('submit', function(e) {
+        const requiredFields = ['compagnie_assurance', 'ref_contrat', 'date_effet', 'echeance', 'avenant'];
+        let isValid = true;
+
+        requiredFields.forEach(field => {
+            const element = document.getElementById(field);
+            if (!element.value.trim()) {
+                element.classList.add('is-invalid');
+                isValid = false;
+            }
+        });
+
+        if (!isValid) {
+            e.preventDefault();
+            alert("Veuillez remplir tous les champs obligatoires");
+        }
+    });
+
+    // Réinitialiser la validation lorsqu'on modifie un champ
+    document.querySelectorAll('input, select').forEach(element => {
+        element.addEventListener('input', function() {
+            this.classList.remove('is-invalid');
+        });
+    });
+</script>
+@endpush
 @endsection
