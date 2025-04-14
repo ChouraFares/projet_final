@@ -188,14 +188,19 @@
 
                     <!-- Montant de Dégât -->
                     <div class="form-group">
-                        <label for="mt">Montant de Dégât (TND)</label>
-                        <input type="number" step="0.01" name="mt" id="mt" 
-                               class="form-control @error('mt') is-invalid @enderror" 
-                               value="{{ old('mt', $sinistre->mt) }}" 
-                               required>
-                        @error('mt')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <label for="mt">Montant Assuré</label>
+                        <input 
+                        type="number" 
+                        step="0.01" 
+                        name="mt" 
+                        id="mt"
+                        class="form-control @error('mt') is-invalid @enderror"
+                        value="{{ str_replace(',', '.', old('mt', $sinistre->mt)) }}"
+                        required
+                    >
+
+
+                    
                     </div>
 
                     <!-- Date Prévue de Remboursement -->

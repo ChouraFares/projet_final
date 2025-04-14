@@ -160,7 +160,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="mt">MT</label>
+                        <label for="mt">Montant Assuré</label>
                         <input type="text" name="mt" id="mt" 
                                class="form-control @error('mt') is-invalid @enderror"
                                value="{{ old('mt') }}">

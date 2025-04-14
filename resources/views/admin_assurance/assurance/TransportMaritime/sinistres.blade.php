@@ -338,7 +338,7 @@
                 <th>Transporteur</th>
                 <th>Date Incident</th>
                 <th>Lieu</th>
-                <th>MT</th>
+                <th>Montant Assuré</th>
                 <th>Date Remb.</th>
                 <th>Nature</th>
                 <th>Statut</th>
@@ -440,7 +440,7 @@
                 <th>Transporteur</th>
                 <th>Date Incident</th>
                 <th>Lieu</th>
-                <th>MT</th>
+                <th>Montant Assuré</th>
                 <th>Date Remb.</th>
                 <th>Nature</th>
                 <th>Statut</th>
