@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use \Log;
 use App\Models\AssuranceMaladie;
 use App\Models\Bordereau;
 use Illuminate\Http\Request;
@@ -23,11 +24,9 @@ return view('admin_assurance.assurance.Assurance Maladie.index');
  // app\Http\Controllers\AssuranceMaladieContratsController.php
  public function index()
  {
-     $assurances = AssuranceMaladie::orderBy('created_at', 'desc')->get();
+     $assurances = AssuranceMaladie::orderBy('date_envoi', 'desc')->get();
      return view('admin_assurance.assurance.Assurance Maladie.borderaux', compact('assurances'));
  }
-
-
     
 
     /**
@@ -62,7 +61,6 @@ return view('admin_assurance.assurance.Assurance Maladie.index');
             'date_de_soin' => $request->date_de_soin,
             'status' => $request->status,
             'reclamation' => $request->reclamation,
-            'created_at' => now() // Force la date/heure actuelle
         ]);
     
         return redirect()->route('admin.assurance.AssuranceMaladie.contrats')

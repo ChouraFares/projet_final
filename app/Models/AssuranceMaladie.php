@@ -19,7 +19,6 @@ class AssuranceMaladie extends Model
         'date_de_soin',
         'status',
         'reclamation',
-        'created_at' // Ajoutez cette ligne
     ];
 
 
