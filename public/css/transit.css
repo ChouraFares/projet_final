@@ -380,15 +380,13 @@ table tr:hover {
     }
 
     /* Styles pour les groupes de factures - Appliquer uniquement aux colonnes jusqu'à BL */
-    td.group-1 { background-color: #f67206 !important; }
-    td.group-2 { background-color: #fc0909 !important; }
-    td.group-3 { background-color: #7a9b03 !important; }
-    td.group-4 { background-color: #7b0ee8 !important; }
-    td.group-5 { background-color: #00c0fb !important; }
-    td.group-6 { background-color: #2105f9 !important; }
-    td.group-7 { background-color: #e542ca !important; }
-    td.group-8 { background-color: #f2f843 !important; }
-    td.group-9 { background-color: #8c4949 !important; }
-    td.group-10 { background-color: #333350 !important; }
-
-
+    td.group-1 { background-color: #FFB347 !important; } /* Orange doux */
+    td.group-2 { background-color: #FF6B6B !important; } /* Rouge pastel */
+    td.group-3 { background-color: #A3C586 !important; } /* Vert apaisant */
+    td.group-4 { background-color: #B39DDB !important; } /* Lavande */
+    td.group-5 { background-color: #81D4FA !important; } /* Bleu ciel léger */
+    td.group-6 { background-color: #7986CB !important; } /* Bleu doux */
+    td.group-7 { background-color: #F48FB1 !important; } /* Rose pâle */
+    td.group-8 { background-color: #FFF176 !important; } /* Jaune doux */
+    td.group-9 { background-color: #A1887F !important; } /* Brun terreux */
+    td.group-10 { background-color: #90A4AE !important; } /* Gris-bleu */
