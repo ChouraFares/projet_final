@@ -21,6 +21,7 @@ class FlotteSinistre extends Model
         'date_cloture_dossier',
         'reglement',
         'Expert',
+        'reglement_reçu',
         'attachments_pdf',
         'statut',
         'commentaire',

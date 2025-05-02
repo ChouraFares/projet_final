@@ -176,6 +176,18 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+
+
+                    <div class="form-group">
+                        <label for="reglement_reçu">Réglement Reçu </label>
+                        <input type="text" name="reglement_reçu" 
+                               class="form-control @error('reglement_reçu') is-invalid @enderror" 
+                               value="{{ old('reglement_reçu', $sinistre->reglement_reçu) }}" 
+                               required>
+                        @error('Expert')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
 
                 <!-- Quatrième colonne -->

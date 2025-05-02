@@ -154,6 +154,17 @@
                         @enderror
                     </div>
 
+                       <!-- Expert -->
+                       <div class="form-group">
+                        <label for="reglement_reçu">Réglement Reçu</label>
+                        <input type="text" name="reglement_reçu" 
+                               class="form-control @error('reglement_reçu') is-invalid @enderror" 
+                               value="{{ old('reglement_reçu') }}">
+                        @error('reglement_reçu')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <!-- Fichier PDF -->
                     <div class="form-group">
                         <label for="attachments_pdf">Fichier PDF Attaché</label>

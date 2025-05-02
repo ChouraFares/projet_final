@@ -378,6 +378,7 @@ table tr:hover {
         color: #1E3D58;
         background-color: #f8f9fa;
     }
+    
 
     /* Styles pour les groupes de factures - Appliquer uniquement aux colonnes jusqu'à BL */
     td.group-1 { background-color: #FFB347 !important; } /* Orange doux */

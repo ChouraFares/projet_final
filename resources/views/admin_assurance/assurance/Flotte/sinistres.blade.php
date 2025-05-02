@@ -291,6 +291,7 @@
                 <th>Clôture</th>
                 <th>Règlement</th>
                 <th>Expert</th>
+                <th>Reglement Reçu</th>
                 <th>Documents</th>
                 <th>Commentaire</th>
                 <th>Actions</th>
@@ -354,6 +355,12 @@
                                 <i class="fas fa-user-tie me-1"></i> Expert
                             </span>
                             @break
+
+                            @case('reglement_reçu')
+                            <span class="status-badge status-expert">
+                                Réglement Reçu
+                            </span>
+                            @break
                         @case('En Attente Du Remboursement')
                             <span class="status-badge status-attente-remboursement">
                                 <i class="fas fa-coins me-1"></i> En Attente
@@ -377,6 +384,8 @@
                 <td>{{ $sinistre->date_cloture_dossier ? $sinistre->date_cloture_dossier->format('d/m/Y') : '-' }}</td>
                 <td>{{ $sinistre->reglement ?? 'N/A' }}</td>
                 <td>{{ $sinistre->Expert ?? 'N/A' }}</td>
+                <td>{{ $sinistre->reglement_reçu ?? 'N/A' }}</td>
+
                 <td>
                     @if($sinistre->attachments_pdf)
                         <a href="{{ Storage::url($sinistre->attachments_pdf) }}" class="pdf-link" target="_blank">

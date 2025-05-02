@@ -137,6 +137,7 @@ class AssuranceFlotteController extends Controller
             'date_cloture_dossier' => 'nullable|date',
             'reglement' => 'nullable',
             'Expert' => 'nullable',
+            'reglement_reçu' => 'nullable|string',
             'attachments_pdf' => 'nullable|file|mimes:pdf|max:2048',
             'statut' => 'nullable|in:En Cours,Clôturé',
             'commentaire' => 'nullable|string',
@@ -195,6 +196,7 @@ class AssuranceFlotteController extends Controller
             'date_cloture_dossier' => 'nullable|date',
             'reglement' => 'nullable',
             'Expert' => 'nullable',
+            'reglement_reçu' => 'nullable|string',
             'attachments_pdf' => 'nullable|file|mimes:pdf|max:2048', // Fichier PDF, max 2MB
             'statut' => 'nullable|in:En Cours,Clôturé',
             'commentaire' => 'nullable|string',
