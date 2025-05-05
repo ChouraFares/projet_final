@@ -457,61 +457,62 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-$(document).ready(function() {
-    // Initialisation de la table
-    let table = $('#sinistresTable').DataTable({
-        dom: 'lBfrtip', // 'l' pour activer le lengthMenu
-        buttons: [
-            {
-                extend: 'excelHtml5',
-                text: '<i class="fas fa-file-excel me-1"></i> Excel',
-                className: 'btn btn-success',
-                exportOptions: { columns: ':not(:last-child)' }
-            },
-            {
-                extend: 'pdfHtml5',
-                text: '<i class="fas fa-file-pdf me-1"></i> PDF',
-                className: 'btn btn-danger',
-                exportOptions: { columns: ':not(:last-child)' },
-                customize: function(doc) {
-                    doc.defaultStyle.fontSize = 8;
-                    doc.styles.tableHeader.fontSize = 9;
-                    doc.pageMargins = [20, 40, 20, 40];
-                    doc.content[1].table.widths = Array(doc.content[1].table.body[0].length).fill('auto');
-                }
+    $(document).ready(function() {
+        // Configuration de langue de secours
+        const frenchTranslations = {
+            "processing": "Traitement en cours...",
+            "search": "Rechercher:",
+            "lengthMenu": "Afficher _MENU_ éléments",
+            "info": "Affichage de _START_ à _END_ sur _TOTAL_ éléments",
+            "infoEmpty": "Affichage de 0 à 0 sur 0 éléments",
+            "infoFiltered": "(filtrés parmi _MAX_ éléments au total)",
+            "loadingRecords": "Chargement en cours...",
+            "zeroRecords": "Aucun élément correspondant trouvé",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent"
             }
-        ],
-        lengthMenu: [
-            [10, 25, 50, -1],
-            ['10', '25', '50', 'Tous']
-        ],
-        columnDefs: [
-            { targets: 15, searchable: false, orderable: false } // Actions column
-        ],
-        initComplete: function() {
-            this.api().buttons().container().appendTo('#exportButtons');
-
-            // Appliquer les filtres à chaque colonne (sauf Actions)
-            this.api().columns().every(function(index) {
-                var column = this;
-                if (index !== 15) {
-                    $('input', column.footer()).on('keyup change clear', function() {
-                        if (column.search() !== this.value) {
-                            column.search(this.value).draw();
-                        }
-                    });
+        };
+    
+        let table = $('#sinistresTable').DataTable({
+            dom: 'Blfrtip',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    text: '<i class="fas fa-file-excel me-1"></i> Excel',
+                    className: 'btn btn-success',
+                    exportOptions: { columns: ':not(:last-child)' }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    text: '<i class="fas fa-file-pdf me-1"></i> PDF',
+                    className: 'btn btn-danger',
+                    exportOptions: { columns: ':not(:last-child)' }
+                }
+            ],
+            language: frenchTranslations, // Utilisation des traductions locales
+            responsive: true,
+            initComplete: function() {
+                this.api().buttons().container().appendTo('#exportButtons');
+                
+                // Initialisation des tooltips
+                $('[data-bs-toggle="tooltip"]').tooltip();
+            }
+        });
+    
+        // Filtres par colonne
+        table.columns().every(function() {
+            let column = this;
+            $('input', column.footer()).on('keyup change', function() {
+                if (column.search() !== this.value) {
+                    column.search(this.value).draw();
                 }
             });
-
-             // Tooltips
-            $('[data-bs-toggle="tooltip"]').tooltip({ trigger: 'hover', placement: 'top' });
-        },
-        language: {
-            url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/fr-FR.json',
-        }
+        });
     });
-});
-</script>
+    </script>
 
 @endsection
 
