@@ -306,7 +306,7 @@
                 <td>{{ $sinistre->vehicule }}</td>
                 <td>{{ $sinistre->chauffeur }}</td>
                 <td>{{ $sinistre->fautif ?? 'N/A' }}</td>
-                <td>{{ $sinistre->date_sinistre->format('d/m/Y') }}</td>
+                <td>{{ optional($sinistre->date_sinistre)->format('d/m/Y') }}</td>
                 <td>
                     @switch($sinistre->nature_sinistre)
                         @case('Connexe')
