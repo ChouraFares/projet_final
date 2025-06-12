@@ -124,8 +124,8 @@ class MaritimeController extends Controller
             'prime' => 'nullable|string', // Accepte les nombres décimaux
             'fournisseur' => 'nullable',
             'num_facture' => 'nullable',
-            'montant_facture_usd' => 'nullable|numeric', // Accepte les nombres décimaux
-            'montant_facture_tnd' => 'nullable|numeric', // Accepte les nombres décimaux
+            'montant_facture_usd' => 'nullable|string', // Accepte les nombres décimaux
+            'montant_facture_tnd' => 'nullable|string', // Accepte les nombres décimaux
             'num_conteneur' => 'nullable',
             'date_depot' => 'nullable|date',
             'transporteur_maritime' => 'nullable',
