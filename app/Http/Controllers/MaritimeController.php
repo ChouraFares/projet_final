@@ -131,7 +131,7 @@ class MaritimeController extends Controller
             'transporteur_maritime' => 'nullable',
             'date_incident' => 'nullable|date',
             'lieu' => 'nullable',
-            'mt' => 'nullable|numeric', // Accepte les nombres décimaux
+            'mt' => 'nullable|string', // Accepte les nombres décimaux
             'date_prev_remboursement' => 'nullable|date',
             'nature_de_sinistre' => 'nullable',
             'statut_du_dossier' => 'nullable',
